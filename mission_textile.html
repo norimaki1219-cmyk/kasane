@@ -148,37 +148,63 @@ const CONTACT_LINKS = {
   booking: 'https://docs.google.com/forms/d/e/1FAIpQLSeYaHpgJFQp02pQbyRl3fabg9ezvN3SPq6wnjhk3Y8ApuubsQ/viewform?usp=publish-editor',
   document: 'https://docs.google.com/forms/d/e/1FAIpQLSeYaHpgJFQp02pQbyRl3fabg9ezvN3SPq6wnjhk3Y8ApuubsQ/viewform?usp=publish-editor'
 };
-const LEAD_ENDPOINT = ''; // TODO: フォーム送信先（Formspree等のエンドポイント）を設定すると自動送信される
+const LEAD_MAIL_ENDPOINT = 'https://formsubmit.co/ajax/nori.maki1219@gmail.com';
 
-function submitLead(email, company){
-  const payload = {email, company, mission: state.mission ? state.mission.title : '現場の気づき', ts: new Date().toISOString()};
+function encodeResumeToken(handlerName){
+  return btoa(JSON.stringify({h:handlerName, mi:state.missionIndex||0, k:state.knowledge}));
+}
+function decodeResumeToken(token){
+  try{ return JSON.parse(atob(token)); }catch(e){ return null; }
+}
+function resumeLink(handlerName){
+  return `${location.href.split('?')[0]}?resume=${encodeResumeToken(handlerName)}`;
+}
+function submitLead(email, company, handlerName){
+  const link = resumeLink(handlerName);
+  const payload = {
+    email, company,
+    mission: state.mission ? state.mission.title : '現場の気づき',
+    ts: new Date().toISOString(),
+    _subject: `【FACTORY KNOWLEDGE EXPERIENCE】診断結果のご案内${company ? '（'+company+'様）' : ''}`,
+    _autoresponse: `お問い合わせありがとうございます。\n\n下記のリンクから、あなたの診断結果をご覧いただけます。\n\n${link}\n\n※このメールは自動送信されています。`,
+    _captcha: 'false'
+  };
   try{
     const key = 'fke_leads';
     const list = JSON.parse(localStorage.getItem(key) || '[]');
     list.push(payload);
     localStorage.setItem(key, JSON.stringify(list));
   }catch(e){}
-  if(LEAD_ENDPOINT){
-    fetch(LEAD_ENDPOINT, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)}).catch(()=>{});
-  }
+  return fetch(LEAD_MAIL_ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(payload)});
 }
-function leadGate(nextFn){
+function leadGate(nextFn, handlerName){
   state.pendingNext = nextFn;
+  state.pendingNextName = handlerName;
   render(`<div class="eyebrow">RESULT</div><h2>診断結果を見る前に</h2>
-  <p class="muted" style="font-size:15px">よろしければ、結果のご案内や関連事例のご紹介にご活用させてください。</p>
+  <p class="muted" style="font-size:15px">結果は、ご入力いただいたメールアドレス宛にお送りするリンクからご覧いただきます。</p>
   <div class="leadform">
     <input id="leadCompany" placeholder="会社名（任意）">
-    <input id="leadEmail" type="email" placeholder="メールアドレス（任意）">
+    <input id="leadEmail" type="email" placeholder="メールアドレス（必須）">
   </div>
   <p class="muted" style="font-size:12px">ご記入いただいた情報は、結果のご案内・関連事例のご紹介以外には使用しません。</p>
-  <button class="btn" onclick="submitLeadAndProceed()">結果を見る ▶</button>`);
+  <button class="btn" id="leadSubmitBtn" onclick="submitLeadAndProceed()">結果のリンクを送る ▶</button>`);
 }
 function submitLeadAndProceed(){
   const email=(document.getElementById('leadEmail').value||'').trim();
   const company=(document.getElementById('leadCompany').value||'').trim();
-  if(email) submitLead(email, company);
-  const fn=state.pendingNext; state.pendingNext=null;
-  if(fn) fn();
+  if(!email){ alert('メールアドレスをご入力ください。結果はメールでお送りします。'); return; }
+  const btn=document.getElementById('leadSubmitBtn');
+  if(btn){ btn.disabled=true; btn.textContent='送信中…'; }
+  const handlerName = state.pendingNextName || 'complete';
+  submitLead(email, company, handlerName).then(res=>{
+    if(!res.ok) throw new Error('send failed');
+    render(`<div class="eyebrow">RESULT</div><div class="icon">📩</div><h2>結果をメールでお送りしました</h2>
+    <p class="muted" style="font-size:15px"><strong>${email}</strong> 宛に、診断結果を見るためのリンクを送信しました。<br>メールボックス（迷惑メールフォルダもご確認ください）から、そのリンクを開いてください。</p>`);
+  }).catch(()=>{
+    render(`<div class="eyebrow">RESULT</div><div class="icon">⚠</div><h2>送信できませんでした</h2>
+    <p class="muted" style="font-size:15px">お手数ですが、時間をおいて再度お試しください。</p>
+    <button class="btn" onclick="leadGate(state.pendingNext, state.pendingNextName)">戻る</button>`);
+  });
 }
 
 const K = [
@@ -504,7 +530,7 @@ function genBossChoice(c){
     state.knowledge.result=1;state.knowledge.shared=Math.max(state.knowledge.shared,1);
     text=failed?m.verbalAfterFail:m.verbalAfterSuccess;
   }
-  render(`<div class="eyebrow">BOSS RESULT</div><div class="icon">${c==='record'?'📋':'💬'}</div><p>${text}</p><button class="btn" onclick="leadGate(genComplete)">NEXT ▶</button>`);
+  render(`<div class="eyebrow">BOSS RESULT</div><div class="icon">${c==='record'?'📋':'💬'}</div><p>${text}</p><button class="btn" onclick="leadGate(genComplete,'genComplete')">NEXT ▶</button>`);
 }
 function genComplete(){
   state.step=10;
@@ -682,7 +708,7 @@ function bossChoice(c){
       ? '「すみませんでした」とその場で謝って終わらせた。<br><br>班長「……まあ、次は気をつけろよ」<br><br><span class="muted">原因も対策も、どこにも残らなかった。</span>'
       : 'みんなに「効果があった」と口頭で伝えた。<br><br>その場は「おー」という反応だった。<br><br><span class="muted">しかし展示会当日、この話を覚えていたのは、あなただけだった。</span>';
   }
-  render(`<div class="eyebrow">BOSS RESULT</div><div class="icon">${c==='record'?'📋':'💬'}</div><p>${text}</p><button class="btn" onclick="leadGate(complete)">NEXT ▶</button>`);
+  render(`<div class="eyebrow">BOSS RESULT</div><div class="icon">${c==='record'?'📋':'💬'}</div><p>${text}</p><button class="btn" onclick="leadGate(complete,'complete')">NEXT ▶</button>`);
 }
 function knowledgeScore(){
   return state.knowledge.recorded+state.knowledge.searchable+state.knowledge.result+state.knowledge.shared;
@@ -762,7 +788,18 @@ function restart(){
   state.step=0;state.action=null;state.searchFound=false;state.bossChoice=null;
   state.knowledge={idea:true,recorded:0,searchable:0,result:0,shared:0};missionSelect();
 }
-missionSelect();
+function tryResume(){
+  const token = new URLSearchParams(location.search).get('resume');
+  if(!token) return false;
+  const data = decodeResumeToken(token);
+  if(!data) return false;
+  state.missionIndex = data.mi || 0;
+  state.mission = MISSIONS[state.missionIndex] || MISSIONS[0];
+  state.knowledge = Object.assign({idea:true, recorded:0, searchable:0, result:0, shared:0}, data.k || {});
+  (data.h==='genComplete' ? genComplete : complete)();
+  return true;
+}
+if(!tryResume()) missionSelect();
 </script>
 </body>
 </html>
