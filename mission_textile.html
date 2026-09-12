@@ -148,7 +148,7 @@ const CONTACT_LINKS = {
   booking: 'https://docs.google.com/forms/d/e/1FAIpQLSeYaHpgJFQp02pQbyRl3fabg9ezvN3SPq6wnjhk3Y8ApuubsQ/viewform?usp=publish-editor',
   document: 'https://docs.google.com/forms/d/e/1FAIpQLSeYaHpgJFQp02pQbyRl3fabg9ezvN3SPq6wnjhk3Y8ApuubsQ/viewform?usp=publish-editor'
 };
-const LEAD_MAIL_ENDPOINT = 'https://formsubmit.co/ajax/nori.maki1219@gmail.com';
+const LEAD_MAIL_ENDPOINT = 'https://formsubmit.co/nori.maki1219@gmail.com';
 
 function encodeResumeToken(handlerName){
   return btoa(JSON.stringify({h:handlerName, mi:state.missionIndex||0, k:state.knowledge}));
@@ -159,56 +159,42 @@ function decodeResumeToken(token){
 function resumeLink(handlerName){
   return `${location.href.split('?')[0]}?resume=${encodeResumeToken(handlerName)}`;
 }
-function submitLead(email, company, handlerName){
-  const link = resumeLink(handlerName);
-  const payload = {
-    email, company,
-    mission: state.mission ? state.mission.title : '現場の気づき',
-    ts: new Date().toISOString(),
-    _subject: `【FACTORY KNOWLEDGE EXPERIENCE】診断結果のご案内${company ? '（'+company+'様）' : ''}`,
-    _autoresponse: `お問い合わせありがとうございます。\n\n下記のリンクから、あなたの診断結果をご覧いただけます。\n\n${link}\n\n※このメールは自動送信されています。`,
-    _captcha: 'false'
-  };
-  try{
-    const key = 'fke_leads';
-    const list = JSON.parse(localStorage.getItem(key) || '[]');
-    list.push(payload);
-    localStorage.setItem(key, JSON.stringify(list));
-  }catch(e){}
-  return fetch(LEAD_MAIL_ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(payload)});
-}
 function leadGate(nextFn, handlerName){
   state.pendingNext = nextFn;
   state.pendingNextName = handlerName;
+  const nextUrl = `${location.href.split('?')[0]}?sent=1`;
   render(`<div class="eyebrow">RESULT</div><h2>診断結果を見る前に</h2>
   <p class="muted" style="font-size:15px">結果は、ご入力いただいたメールアドレス宛にお送りするリンクからご覧いただきます。</p>
-  <div class="leadform">
-    <input id="leadCompany" placeholder="会社名（任意）">
-    <input id="leadEmail" type="email" placeholder="メールアドレス（必須）">
-  </div>
-  <p class="muted" style="font-size:12px">ご記入いただいた情報は、結果のご案内・関連事例のご紹介以外には使用しません。</p>
-  <button class="btn" id="leadSubmitBtn" onclick="submitLeadAndProceed()">結果のリンクを送る ▶</button>`);
+  <form id="leadForm" action="${LEAD_MAIL_ENDPOINT}" method="POST" onsubmit="return prepareLeadSubmit(this)">
+    <div class="leadform">
+      <input type="text" name="company" id="leadCompany" placeholder="会社名（任意）">
+      <input type="email" name="email" id="leadEmail" placeholder="メールアドレス（必須）" required>
+    </div>
+    <input type="hidden" name="_subject" id="leadSubject" value="【FACTORY KNOWLEDGE EXPERIENCE】診断結果のご案内">
+    <input type="hidden" name="_autoresponse" id="leadAutoresponse" value="">
+    <input type="hidden" name="_next" value="${nextUrl}">
+    <input type="hidden" name="_template" value="basic">
+    <p class="muted" style="font-size:12px">ご記入いただいた情報は、結果のご案内・関連事例のご紹介以外には使用しません。次の画面でスパム確認（reCAPTCHA）が出る場合があります。</p>
+    <button class="btn" type="submit">結果のリンクを送る ▶</button>
+  </form>`);
 }
-function submitLeadAndProceed(){
-  const email=(document.getElementById('leadEmail').value||'').trim();
-  const company=(document.getElementById('leadCompany').value||'').trim();
-  if(!email){ alert('メールアドレスをご入力ください。結果はメールでお送りします。'); return; }
-  const btn=document.getElementById('leadSubmitBtn');
-  if(btn){ btn.disabled=true; btn.textContent='送信中…'; }
+function prepareLeadSubmit(form){
+  const email = (form.email.value||'').trim();
+  if(!email){ alert('メールアドレスをご入力ください。結果はメールでお送りします。'); return false; }
+  const company = (form.company.value||'').trim();
   const handlerName = state.pendingNextName || 'complete';
-  submitLead(email, company, handlerName).then(res=>res.json().catch(()=>({}))).then(data=>{
-    if(!data || data.success===false || data.success==='false'){
-      throw new Error((data && data.message) || 'send failed');
-    }
-    render(`<div class="eyebrow">RESULT</div><div class="icon">📩</div><h2>結果をメールでお送りしました</h2>
-    <p class="muted" style="font-size:15px"><strong>${email}</strong> 宛に、診断結果を見るためのリンクを送信しました。<br>メールボックス（迷惑メールフォルダもご確認ください）から、そのリンクを開いてください。</p>`);
-  }).catch(err=>{
-    const detail = (err && err.message) ? String(err.message).replace(/</g,'&lt;') : '不明なエラー';
-    render(`<div class="eyebrow">RESULT</div><div class="icon">⚠</div><h2>送信できませんでした</h2>
-    <p class="muted" style="font-size:15px">お手数ですが、時間をおいて再度お試しください。</p>
-    <p class="muted" style="font-size:12px">詳細: ${detail}</p>
-    <button class="btn" onclick="leadGate(state.pendingNext, state.pendingNextName)">戻る</button>`);
-  });
+  const link = resumeLink(handlerName);
+  document.getElementById('leadSubject').value = `【FACTORY KNOWLEDGE EXPERIENCE】診断結果のご案内${company ? '（'+company+'様）' : ''}`;
+  document.getElementById('leadAutoresponse').value = `お問い合わせありがとうございます。\n\n下記のリンクから、あなたの診断結果をご覧いただけます。\n\n${link}\n\n※このメールは自動送信されています。`;
+  try{
+    const key = 'fke_leads';
+    const list = JSON.parse(localStorage.getItem(key) || '[]');
+    list.push({email, company, mission: state.mission ? state.mission.title : '現場の気づき', ts: new Date().toISOString()});
+    localStorage.setItem(key, JSON.stringify(list));
+  }catch(e){}
+  const btn = form.querySelector('button[type="submit"]');
+  if(btn){ btn.disabled = true; btn.textContent = '送信中…'; }
+  return true;
 }
 
 const K = [
@@ -793,15 +779,24 @@ function restart(){
   state.knowledge={idea:true,recorded:0,searchable:0,result:0,shared:0};missionSelect();
 }
 function tryResume(){
-  const token = new URLSearchParams(location.search).get('resume');
-  if(!token) return false;
-  const data = decodeResumeToken(token);
-  if(!data) return false;
-  state.missionIndex = data.mi || 0;
-  state.mission = MISSIONS[state.missionIndex] || MISSIONS[0];
-  state.knowledge = Object.assign({idea:true, recorded:0, searchable:0, result:0, shared:0}, data.k || {});
-  (data.h==='genComplete' ? genComplete : complete)();
-  return true;
+  const params = new URLSearchParams(location.search);
+  const token = params.get('resume');
+  if(token){
+    const data = decodeResumeToken(token);
+    if(data){
+      state.missionIndex = data.mi || 0;
+      state.mission = MISSIONS[state.missionIndex] || MISSIONS[0];
+      state.knowledge = Object.assign({idea:true, recorded:0, searchable:0, result:0, shared:0}, data.k || {});
+      (data.h==='genComplete' ? genComplete : complete)();
+      return true;
+    }
+  }
+  if(params.get('sent')==='1'){
+    render(`<div class="eyebrow">RESULT</div><div class="icon">📩</div><h2>結果をメールでお送りしました</h2>
+    <p class="muted" style="font-size:15px">ご入力いただいたメールアドレス宛に、診断結果を見るためのリンクを送信しました。<br>メールボックス（迷惑メールフォルダもご確認ください）から、そのリンクを開いてください。</p>`);
+    return true;
+  }
+  return false;
 }
 if(!tryResume()) missionSelect();
 </script>
