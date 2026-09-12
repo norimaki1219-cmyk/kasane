@@ -144,10 +144,9 @@ const state = {
 };
 
 const CONTACT_LINKS = {
-  // TODO: 予約ページ（Googleフォーム/カレンダー予約等）のURLに置き換える
-  booking: 'mailto:info@example.com?subject=%E8%A9%B3%E7%B4%B0%E8%A8%BA%E6%96%AD%E3%83%BB%E3%83%87%E3%83%A2%E3%81%AE%E3%81%94%E7%9B%B8%E8%AB%87',
-  // TODO: 導入事例・資料のURLに置き換える
-  document: '#'
+  // 詳細診断・デモの予約、導入事例・資料のご希望はいずれもこのGoogleフォームで受け付ける
+  booking: 'https://docs.google.com/forms/d/e/1FAIpQLSeYaHpgJFQp02pQbyRl3fabg9ezvN3SPq6wnjhk3Y8ApuubsQ/viewform?usp=publish-editor',
+  document: 'https://docs.google.com/forms/d/e/1FAIpQLSeYaHpgJFQp02pQbyRl3fabg9ezvN3SPq6wnjhk3Y8ApuubsQ/viewform?usp=publish-editor'
 };
 const LEAD_ENDPOINT = ''; // TODO: フォーム送信先（Formspree等のエンドポイント）を設定すると自動送信される
 
@@ -752,8 +751,8 @@ function callStaff(){
   <h1>この続きは、<br>御社の現場で。</h1>
   <p class="muted" style="font-size:16px">今回は5分の体験でしたが、実際の診断では<br>御社の状況に合わせて「どこで改善が止まっているか」を確認します。</p>
   <div class="actions">
-    <a class="action" href="${CONTACT_LINKS.booking}"><span class="aicon">📅</span>詳細診断・デモを予約する</a>
-    <a class="action" href="${CONTACT_LINKS.document}"><span class="aicon">📄</span>導入事例・資料を見る</a>
+    <a class="action" href="${CONTACT_LINKS.booking}" target="_blank" rel="noopener"><span class="aicon">📅</span>詳細診断・デモを予約する</a>
+    <a class="action" href="${CONTACT_LINKS.document}" target="_blank" rel="noopener"><span class="aicon">📄</span>導入事例・資料を見る</a>
     <a class="action" href="index.html"><span class="aicon">🏭</span>他の業種の体験も見る</a>
   </div>
   <button class="btn secondary" onclick="restart()">🔁 最初から見る</button>`);
