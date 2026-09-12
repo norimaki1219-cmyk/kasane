@@ -196,13 +196,17 @@ function submitLeadAndProceed(){
   const btn=document.getElementById('leadSubmitBtn');
   if(btn){ btn.disabled=true; btn.textContent='送信中…'; }
   const handlerName = state.pendingNextName || 'complete';
-  submitLead(email, company, handlerName).then(res=>{
-    if(!res.ok) throw new Error('send failed');
+  submitLead(email, company, handlerName).then(res=>res.json().catch(()=>({}))).then(data=>{
+    if(!data || data.success===false || data.success==='false'){
+      throw new Error((data && data.message) || 'send failed');
+    }
     render(`<div class="eyebrow">RESULT</div><div class="icon">📩</div><h2>結果をメールでお送りしました</h2>
     <p class="muted" style="font-size:15px"><strong>${email}</strong> 宛に、診断結果を見るためのリンクを送信しました。<br>メールボックス（迷惑メールフォルダもご確認ください）から、そのリンクを開いてください。</p>`);
-  }).catch(()=>{
+  }).catch(err=>{
+    const detail = (err && err.message) ? String(err.message).replace(/</g,'&lt;') : '不明なエラー';
     render(`<div class="eyebrow">RESULT</div><div class="icon">⚠</div><h2>送信できませんでした</h2>
     <p class="muted" style="font-size:15px">お手数ですが、時間をおいて再度お試しください。</p>
+    <p class="muted" style="font-size:12px">詳細: ${detail}</p>
     <button class="btn" onclick="leadGate(state.pendingNext, state.pendingNextName)">戻る</button>`);
   });
 }
