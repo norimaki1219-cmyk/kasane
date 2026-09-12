@@ -151,10 +151,18 @@ const CONTACT_LINKS = {
 const LEAD_MAIL_ENDPOINT = 'https://formsubmit.co/nori.maki1219@gmail.com';
 
 function encodeResumeToken(handlerName){
-  return btoa(JSON.stringify({h:handlerName, mi:state.missionIndex||0, k:state.knowledge}));
+  const k = state.knowledge;
+  const h = handlerName==='genComplete' ? 'g' : 'c';
+  const mi = String(state.missionIndex||0);
+  const vals = [k.idea?1:0, k.recorded||0, k.searchable||0, k.result||0, k.shared||0].join('');
+  return `${h}${mi}${vals}`;
 }
 function decodeResumeToken(token){
-  try{ return JSON.parse(atob(token)); }catch(e){ return null; }
+  if(!token || !/^[cg]\d{6}$/.test(token)) return null;
+  const h = token[0]==='g' ? 'genComplete' : 'complete';
+  const mi = parseInt(token[1],10) || 0;
+  const d = token.slice(2).split('').map(Number);
+  return {h, mi, k:{idea:!!d[0], recorded:d[1], searchable:d[2], result:d[3], shared:d[4]}};
 }
 function resumeLink(handlerName){
   return `${location.href.split('?')[0]}?resume=${encodeResumeToken(handlerName)}`;
