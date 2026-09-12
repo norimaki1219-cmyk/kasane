@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FACTORY KNOWLEDGE EXPERIENCE｜業種インデックス</title>
+<style>
+:root{
+  --bg:#0f1720; --panel:#17212d; --panel2:#1e2c3a; --line:#324456;
+  --text:#f5f7fa; --muted:#aeb9c4; --accent:#ffc928; --danger:#ff6b6b;
+  --ok:#65d6a6; --empty:#4a5a68;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(160deg,#0b1118,#172635);color:var(--text);
+font-family:system-ui,-apple-system,"Noto Sans JP","Segoe UI",sans-serif;min-height:100vh}
+.app{max-width:960px;margin:auto;min-height:100vh;padding:28px 20px;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.brand{font-size:13px;letter-spacing:.16em;color:var(--accent);font-weight:800}
+.count{font-size:12px;color:var(--muted)}
+h1{font-size:clamp(26px,5vw,42px);margin:18px 0 10px;line-height:1.25}
+.lead{font-size:15px;line-height:1.85;color:#e3e9ef;max-width:640px}
+.lead .muted{color:var(--muted)}
+.source{font-size:12px;color:var(--muted);margin:6px 0 26px}
+.source a{color:var(--muted)}
+.section-title{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:800;margin:30px 0 14px;
+  display:flex;align-items:center;gap:10px}
+.section-title::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{border:1px solid var(--line);background:var(--panel2);border-radius:16px;padding:16px 18px;
+  display:flex;flex-direction:column;gap:6px;text-decoration:none;color:inherit;min-height:96px;position:relative}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+a.card{cursor:pointer;transition:transform .15s ease, border-color .15s ease}
+.card.disabled{opacity:.5;cursor:default}
+.card-code{font-size:11px;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.card-name{font-size:16px;font-weight:800;line-height:1.4}
+.card-desc{font-size:12px;color:var(--muted);line-height:1.6}
+.badge{position:absolute;top:14px;right:14px;font-size:10px;font-weight:800;letter-spacing:.06em;
+  padding:4px 9px;border-radius:99px}
+.badge.ready{background:rgba(101,214,166,.15);color:var(--ok);border:1px solid var(--ok)}
+.badge.soon{background:rgba(174,185,196,.12);color:var(--muted);border:1px solid var(--line)}
+.footer{color:#71808e;font-size:11px;text-align:center;padding:30px 0 4px}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .app{padding:20px 14px}
+}
+</style>
+<link rel="stylesheet" href="illustrations.css">
+<script src="illustrations-v2.js"></script>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand">FACTORY KNOWLEDGE EXPERIENCE</div>
+    <div class="count" id="countLabel"></div>
+  </div>
+  <h1>業種別 5分間現場体験診断</h1>
+  <p class="lead">「現場の気づきが会社の知識として残るか」を、<b>5つの現場体験</b>を通して疑似体験する展示会向け診断コンテンツです。<br class="muted">
+  日本標準産業分類（大分類E　製造業）の業種ごとに、舞台・登場人物の悩みを変えたシナリオを用意しています。<span class="muted">貴社の業種に近いものをお選びください。</span></p>
+  <p class="source">出典：総務省「日本標準産業分類」大分類E　製造業（中分類09〜32）<br>
+  <a href="https://www.soumu.go.jp/toukei_toukatsu/index/seido/sangyo/02toukatsu01_03000044.html" target="_blank" rel="noopener">soumu.go.jp/toukei_toukatsu/index/seido/sangyo/02toukatsu01_03000044.html</a></p>
+
+  <div class="section-title">体験できる業種</div>
+  <div class="grid" id="readyGrid"></div>
+
+  <div class="section-title">準備中の業種</div>
+  <div class="grid" id="soonGrid"></div>
+
+  <div class="footer">PROTOTYPE｜FACTORY KNOWLEDGE EXPERIENCE　業種インデックス</div>
+</div>
+
+<script>
+// 日本標準産業分類 大分類E 製造業（中分類09〜32）
+const INDUSTRIES = [
+  {code:'09', name:'食料品製造業'},
+  {code:'10', name:'飲料・たばこ・飼料製造業'},
+  {code:'11', name:'繊維工業', file:'mission_textile.html', scene:'縫製工場・縫製ライン'},
+  {code:'12', name:'木材・木製品製造業（家具を除く）'},
+  {code:'13', name:'家具・装備品製造業'},
+  {code:'14', name:'パルプ・紙・紙加工品製造業'},
+  {code:'15', name:'印刷・同関連業'},
+  {code:'16', name:'化学工業'},
+  {code:'17', name:'石油製品・石炭製品製造業'},
+  {code:'18', name:'プラスチック製品製造業（別掲を除く）'},
+  {code:'19', name:'ゴム製品製造業'},
+  {code:'20', name:'なめし革・同製品・毛皮製造業'},
+  {code:'21', name:'窯業・土石製品製造業'},
+  {code:'22', name:'鉄鋼業'},
+  {code:'23', name:'非鉄金属製造業'},
+  {code:'24', name:'金属製品製造業', file:'mission01.html', scene:'板金加工の工場・加工ライン'},
+  {code:'25', name:'はん用機械器具製造業'},
+  {code:'26', name:'生産用機械器具製造業'},
+  {code:'27', name:'業務用機械器具製造業'},
+  {code:'28', name:'電子部品・デバイス・電子回路製造業'},
+  {code:'29', name:'電気機械器具製造業'},
+  {code:'30', name:'情報通信機械器具製造業'},
+  {code:'31', name:'輸送用機械器具製造業', file:'mission_transport.html', scene:'自動車部品の組立工場'},
+  {code:'32', name:'その他の製造業'}
+];
+
+const ready = INDUSTRIES.filter(i => i.file);
+const soon = INDUSTRIES.filter(i => !i.file);
+
+document.getElementById('countLabel').textContent = `${ready.length} / ${INDUSTRIES.length} 業種 公開中`;
+
+document.getElementById('readyGrid').innerHTML = ready.map(i => `
+  <a class="card" href="${i.file}">
+    ${MarketingIllustrations.art(({11:"textile",24:"metal",31:"transport"})[i.code], true)}
+    <span class="badge ready">体験できます</span>
+    <span class="card-code">中分類 ${i.code}</span>
+    <span class="card-name">${i.name}</span>
+    <span class="card-desc">${i.scene}</span>
+  </a>
+`).join('');
+
+document.getElementById('soonGrid').innerHTML = soon.map(i => `
+  <div class="card disabled">
+    <span class="badge soon">準備中</span>
+    <span class="card-code">中分類 ${i.code}</span>
+    <span class="card-name">${i.name}</span>
+  </div>
+`).join('');
+</script>
+</body>
+</html>
