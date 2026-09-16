@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>FACTORY KNOWLEDGE EXPERIENCE｜5つのMISSION（プラスチック製品製造業版）</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZS1XJ9EVBE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ZS1XJ9EVBE');
+</script>
+<style>
+:root{
+  --bg:#0f1720; --panel:#17212d; --panel2:#1e2c3a; --line:#324456;
+  --text:#f5f7fa; --muted:#aeb9c4; --accent:#ffc928; --danger:#ff6b6b;
+  --ok:#65d6a6; --empty:#4a5a68;
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(160deg,#0b1118,#172635);color:var(--text);
+font-family:system-ui,-apple-system,"Noto Sans JP","Segoe UI",sans-serif;min-height:100vh}
+.app{max-width:900px;margin:auto;min-height:100vh;padding:18px;display:flex;flex-direction:column}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.brand{font-size:13px;letter-spacing:.16em;color:var(--accent);font-weight:800}
+.mission-no{font-size:12px;color:var(--muted)}
+.progress{height:7px;background:#263441;border-radius:99px;overflow:hidden;margin:4px 0 16px}
+.progress>div{height:100%;background:var(--accent);width:0%;transition:.5s}
+.knowledge-mini{display:flex;gap:9px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-bottom:16px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:4px;background:var(--empty)}
+.dot.on{background:var(--ok)} .dot.partial{background:var(--accent)}
+.screen{flex:1;display:flex;align-items:center;justify-content:center}
+.card{width:min(100%,760px);background:rgba(23,33,45,.96);border:1px solid var(--line);
+border-radius:24px;padding:clamp(26px,6vw,56px);box-shadow:0 24px 70px rgba(0,0,0,.28);text-align:center}
+.eyebrow{font-size:13px;letter-spacing:.18em;color:var(--accent);font-weight:800;margin-bottom:16px}
+.icon{font-size:64px;margin:10px 0 16px}
+h1{font-size:clamp(30px,6vw,58px);margin:0 0 18px;line-height:1.15}
+h2{font-size:clamp(24px,4vw,38px);margin:0 0 20px}
+p{font-size:clamp(16px,2.3vw,21px);line-height:1.85;color:#e3e9ef}
+.muted{color:var(--muted)}
+.btn{appearance:none;border:0;border-radius:16px;padding:18px 28px;font-size:19px;font-weight:800;
+cursor:pointer;margin-top:22px;background:var(--accent);color:#17212d;min-width:210px}
+.btn.secondary{background:#2b3b4a;color:#fff}.btn.danger{background:var(--danger);color:#fff}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:25px}
+.action{border:1px solid var(--line);background:var(--panel2);color:#fff;border-radius:18px;padding:25px 16px;
+font-size:18px;font-weight:700;cursor:pointer;min-height:130px}
+.action:last-child{grid-column:1/-1}.action:hover{border-color:var(--accent);transform:translateY(-2px)}
+.action .aicon{font-size:36px;display:block;margin-bottom:10px}
+.searchbox{display:flex;gap:10px;margin:24px auto;max-width:560px}
+input{flex:1;padding:17px;border-radius:14px;border:1px solid var(--line);background:#0e161e;color:#fff;font-size:18px}
+.searchbtn{margin:0;min-width:auto;padding:16px 22px}
+.leadform{display:flex;flex-direction:column;gap:10px;max-width:420px;margin:20px auto}
+.actions a.action{text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.result{margin-top:22px;padding:22px;border-radius:16px;background:#111b25;border:1px solid var(--line);text-align:left}
+.result.ok{border-color:var(--ok)} .result.fail{border-color:var(--danger)}
+.status{display:grid;gap:13px;text-align:left;margin-top:20px}
+.status-row{display:grid;grid-template-columns:200px 1fr;gap:12px;align-items:center}
+.status-row strong{font-size:14px;line-height:1.35}
+.bar{height:14px;background:#263441;border-radius:99px;overflow:hidden}.bar>div{height:100%;background:var(--accent)}
+.big-number{font-size:64px;font-weight:900;color:var(--accent)}
+.footer{color:#71808e;font-size:11px;text-align:center;padding:18px 0 4px}
+.fade{animation:fade .35s ease}@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.timeskip{animation:pulse 1s ease-in-out infinite}@keyframes pulse{50%{transform:scale(1.04);opacity:.8}}
+.compare-head{display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;margin:20px 0 8px;font-size:12px}
+.compare-head span:nth-child(2){color:var(--muted);text-align:center}
+.compare-head span:nth-child(3){color:var(--ok);text-align:center;font-weight:700}
+.compare-row{display:grid;grid-template-columns:120px 1fr 1fr;gap:10px;align-items:center;font-size:14px;margin-bottom:10px}
+.feature-list{list-style:none;padding:0;margin:24px 0;text-align:left;display:grid;gap:10px}
+.feature-list li{background:#111b25;border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:15px;line-height:1.6}
+.callstaff-icon{font-size:72px;margin:10px 0 16px;animation:pulse 1.4s ease-in-out infinite}
+.achievement{display:inline-block;margin-top:14px;padding:8px 16px;border-radius:99px;background:#2b3b4a;border:1px solid var(--accent);color:var(--accent);font-size:13px;font-weight:800}
+.npc-line{margin-top:14px;padding:12px 16px;border-radius:12px;background:#111b25;border:1px solid var(--line);color:var(--muted);font-size:13px;text-align:left}
+.levelcard{margin-top:26px;padding-top:24px;border-top:1px dashed var(--line)}
+.premise{display:inline-block;margin:0 auto 20px;padding:14px 22px;border-radius:14px;background:#111b25;border:1px solid var(--line);text-align:left;font-size:14px;color:var(--muted);line-height:1.9}
+.premise b{color:var(--text)}
+.mission-select{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px;text-align:left}
+.mission-card{border:1px solid var(--line);background:var(--panel2);color:#fff;border-radius:16px;padding:18px;cursor:pointer;display:flex;flex-direction:column;gap:4px;font-family:inherit}
+.mission-card:last-child{grid-column:1/-1}
+.mission-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.mission-card.locked{opacity:.55;cursor:default}
+.mission-card.locked:hover{border-color:var(--line);transform:none}
+.mc-no{font-size:11px;letter-spacing:.12em;color:var(--accent);font-weight:800}
+.mc-icon{font-size:28px}
+.mc-title{font-size:16px;font-weight:800}
+.mc-sub{font-size:12px;color:var(--muted)}
+.mc-lock{font-size:11px;color:var(--muted);margin-top:4px}
+@keyframes popIn{0%{transform:scale(.7);opacity:0}60%{transform:scale(1.1);opacity:1}100%{transform:scale(1)}}
+@keyframes shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
+.impact{animation:popIn .5s cubic-bezier(.34,1.56,.64,1)}
+.shake{animation:shake .5s}
+@media(max-width:600px){.app{padding:12px}.card{padding:25px 18px;border-radius:18px}.actions{grid-template-columns:1fr}.action:last-child{grid-column:auto}.searchbox{flex-direction:column}.status-row{grid-template-columns:1fr}.btn{width:100%}.compare-head,.compare-row{grid-template-columns:70px 1fr 1fr;gap:6px;font-size:11px}.mission-select{grid-template-columns:1fr}.mission-card:last-child{grid-column:auto}}
+@media (orientation:landscape) and (max-height:900px){
+  .app{max-width:1000px;padding:10px 24px;min-height:100vh}
+  .top{margin-bottom:6px}
+  .progress{margin:2px 0 8px}
+  .knowledge-mini{margin-bottom:8px;font-size:11px;gap:6px}
+  .screen{padding:4px 0}
+  .card{padding:16px 30px;max-height:calc(100vh - 84px);overflow-y:auto;border-radius:18px}
+  .eyebrow{font-size:11px;margin-bottom:8px}
+  .icon{font-size:38px;margin:2px 0 6px}
+  h1{font-size:clamp(20px,3.6vw,32px);margin:0 0 8px;line-height:1.15}
+  h2{font-size:clamp(16px,2.6vw,22px);margin:0 0 8px}
+  p{font-size:clamp(13px,1.6vw,16px);line-height:1.5}
+  .btn{padding:11px 22px;font-size:15px;margin-top:12px;min-width:170px}
+  .actions{margin-top:12px;gap:10px}
+  .action{padding:12px 10px;min-height:70px;font-size:14px}
+  .action .aicon{font-size:24px;margin-bottom:4px}
+  .searchbox{margin:12px auto}
+  .result{margin-top:12px;padding:14px}
+  .status{margin-top:10px;gap:8px}
+  .status-row{grid-template-columns:170px 1fr;gap:8px}
+  .status-row strong{font-size:12px;line-height:1.3}
+  .levelcard{margin-top:14px;padding-top:14px}
+  .achievement{margin-top:8px;padding:6px 12px;font-size:12px}
+  .npc-line{margin-top:8px;padding:8px 12px;font-size:12px}
+  .callstaff-icon{font-size:46px;margin:2px 0 6px}
+  .big-number{font-size:38px}
+  .premise{padding:10px 16px;font-size:12px;line-height:1.6;margin:0 auto 10px}
+  .mission-select{margin-top:14px;gap:10px}
+  .mission-card{padding:12px}
+  .mc-icon{font-size:22px}
+  .mc-title{font-size:14px}
+  .footer{padding:6px 0 2px;font-size:10px}
+  .feature-list{margin:12px 0;gap:6px}
+  .feature-list li{padding:8px 12px;font-size:13px;line-height:1.4}
+  .compare-head{margin:12px 0 6px}
+  .compare-row{margin-bottom:6px}
+}
+</style>
+<link rel="stylesheet" href="illustrations.css">
+<script src="illustrations-v2.js"></script>
+</head>
+<body>
+<div class="app">
+  <a class="industry-link" href="index.html">← 業種一覧へ</a>
+  <div class="top">
+    <div class="brand">FACTORY KNOWLEDGE EXPERIENCE</div>
+    <div class="mission-no" id="missionLabel">MISSION 01</div>
+  </div>
+  <div class="progress"><div id="progressFill"></div></div>
+  <div class="knowledge-mini" id="miniStatus"></div>
+  <main class="screen" id="screen"></main>
+  <div class="footer">PROTOTYPE｜FACTORY KNOWLEDGE EXPERIENCE（全5 MISSION・プラスチック製品製造業版）</div>
+</div>
+
+<script>
+const state = {
+  step:0, action:null,
+  knowledge:{idea:true, recorded:0, searchable:0, result:0, shared:0},
+  searchFound:false, bossChoice:null, pendingNext:null
+};
+
+const CONTACT_LINKS = {
+  // 詳細診断・デモの予約、導入事例・資料のご希望はいずれもこのGoogleフォームで受け付ける
+  booking: 'https://docs.google.com/forms/d/e/1FAIpQLSeYaHpgJFQp02pQbyRl3fabg9ezvN3SPq6wnjhk3Y8ApuubsQ/viewform?usp=publish-editor',
+  document: 'https://docs.google.com/forms/d/e/1FAIpQLSeYaHpgJFQp02pQbyRl3fabg9ezvN3SPq6wnjhk3Y8ApuubsQ/viewform?usp=publish-editor'
+};
+const LEAD_MAIL_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw5_FQJGb6T48i0vJhhTF1FkLosXNnLBXlCOW96PxclE8AwnWXJtAO0qljvM0TYnQc/exec';
+
+function encodeResumeToken(handlerName){
+  const k = state.knowledge;
+  const h = handlerName==='genComplete' ? 'g' : 'c';
+  const mi = String(state.missionIndex||0);
+  const vals = [k.idea?1:0, k.recorded||0, k.searchable||0, k.result||0, k.shared||0].join('');
+  return `${h}${mi}${vals}`;
+}
+function decodeResumeToken(token){
+  if(!token || !/^[cg]\d{6}$/.test(token)) return null;
+  const h = token[0]==='g' ? 'genComplete' : 'complete';
+  const mi = parseInt(token[1],10) || 0;
+  const d = token.slice(2).split('').map(Number);
+  return {h, mi, k:{idea:!!d[0], recorded:d[1], searchable:d[2], result:d[3], shared:d[4]}};
+}
+function resumeLink(handlerName){
+  return `${location.href.split('?')[0]}?resume=${encodeResumeToken(handlerName)}`;
+}
+function leadGate(nextFn, handlerName){
+  state.pendingNext = nextFn;
+  state.pendingNextName = handlerName;
+  render(`<div class="eyebrow">RESULT</div><h2>診断結果を見る前に</h2>
+  <p class="muted" style="font-size:15px">結果は、ご入力いただいたメールアドレス宛にお送りするリンクからご覧いただきます。</p>
+  <form id="leadForm" action="${LEAD_MAIL_ENDPOINT}" method="POST" target="_blank" onsubmit="return prepareLeadSubmit(this)">
+    <div class="leadform">
+      <input type="text" name="company" id="leadCompany" placeholder="会社名（任意）">
+      <input type="email" name="email" id="leadEmail" placeholder="メールアドレス（必須）" required>
+    </div>
+    <input type="hidden" name="link" id="leadLink" value="">
+    <input type="hidden" name="mission" id="leadMission" value="">
+    <p class="muted" style="font-size:12px">ご記入いただいた情報は、結果のご案内・関連事例のご紹介以外には使用しません。</p>
+    <button class="btn" type="submit">結果のリンクを送る ▶</button>
+  </form>`);
+}
+function prepareLeadSubmit(form){
+  const email = (form.email.value||'').trim();
+  if(!email){ alert('メールアドレスをご入力ください。結果はメールでお送りします。'); return false; }
+  const company = (form.company.value||'').trim();
+  const handlerName = state.pendingNextName || 'complete';
+  const link = resumeLink(handlerName);
+  document.getElementById('leadLink').value = link;
+  document.getElementById('leadMission').value = state.mission ? state.mission.title : '現場の気づき';
+  try{
+    const key = 'fke_leads';
+    const list = JSON.parse(localStorage.getItem(key) || '[]');
+    list.push({email, company, mission: state.mission ? state.mission.title : '現場の気づき', ts: new Date().toISOString()});
+    localStorage.setItem(key, JSON.stringify(list));
+  }catch(e){}
+  setTimeout(()=>{
+    render(`<div class="eyebrow">RESULT</div><div class="icon">📩</div><h2>結果をメールでお送りしました</h2>
+    <p class="muted" style="font-size:15px"><strong>${email}</strong> 宛に、診断結果を見るためのリンクを送信しました。<br>開いた別タブでも送信結果をご確認いただけます。メールボックス（迷惑メールフォルダもご確認ください）から、そのリンクを開いてください。</p>`);
+  }, 50);
+  return true;
+}
+
+const K = [
+  ['💡','アイデア','idea'],['📝','記録','recorded'],['🔍','検索','searchable'],
+  ['📊','改善結果','result'],['🌐','共有','shared']
+];
+
+const MISSIONS = [
+  {icon:'💡',title:'現場の気づき',sub:'発見・記録'},
+  {icon:'⚠',title:'不良・改善対応',sub:'緊急対応',
+    eventTitle:'射出成形ラインで、不良品が見つかった',
+    eventText:'検査の目が止まる。「また、あの不具合か……」<br>成形品の肉厚部にヒケが見つかり、ラインが止まる。',
+    eventFlavor:'――不良の多くは、実は「前にも見た」ものだ。<br>問題は、その記憶が今、活かせるかどうかだ。',
+    actionQuestion:'この不良に、まずどう対応する？',
+    actionHint:'班長はまだ気づいていない。正解はない、あなたなら？',
+    choices:{
+      record:{icon:'📋',label:'原因と応急処置を記録に残す',badge:'即応記録の達人',result:'ヒケの発生状況と応急処置の内容を、その場でメモに残した。<br><br>とりあえず、ラインは動き出した。<br><br><span class="muted">しかし──このメモを、次に見る人がいるとは限らない。</span>'},
+      verbal:{icon:'💬',label:'応急処置をして、班長に口頭で報告する',badge:'口頭報告の達人',result:'原因を推測して保圧時間を調整し、班長に「直しておきました」と伝えた。<br>班長「おう、助かった」<br><br><span class="muted">しかし──何が原因だったのかは、記録されていない。</span>'},
+      nothing:{icon:'➡',label:'応急処置だけして、そのまま様子を見る',badge:'様子見の達人',result:'とりあえず該当ロットを選別しただけで、原因の深掘りはあとに回した。<br><br><span class="muted">ラインは動いている。だが、根本原因は誰も分からないままだ。</span>'}
+    },
+    montage:'・佐藤が射出成形ラインを任されるようになった<br>・別の工程で軽微な不良が2件あった<br>・大きなクレームにはならず、日常が続いた',
+    reaction:{record:'（あの時のメモ、たしかどこかに書いたはず……）',verbal:'（班長に直接話したから、聞けば分かるだろうか？）',nothing:'（結局、原因は分からずじまいだったな……）'},
+    againTitle:'佐藤が、同じ射出成形ラインで<br>また同じようなヒケ不良を出してしまった。',
+    againLine:'佐藤「すみません、また同じところで……<br>前にもこんなことありましたか？」',
+    searchTitle:'過去の不良事例を探す',
+    searchFlavor:'「前にもあった気がする」<br>そう言われて、記録を辿ってみる。',
+    searchPlaceholder:'例：射出成形 / ヒケ / 対策',
+    keywords:['射出成形','ヒケ','対策','原因','保圧'],
+    foundCard:'📋 不良対応記録<br>ヒケ不良の応急処置と原因',
+    foundCaveat:'見つかったのは応急処置の記録だけ。<br>根本原因まで対策されたかは分からない。',
+    foundReaction:'佐藤「これ、参考になりそうです……!」',
+    failCaveat:'本当に前例がなかったのか？<br>それとも、記録がどこにも残らなかっただけなのか？',
+    failReaction:'佐藤「じゃあ、また一からですね……」',
+    statusFlavor:'佐藤を送り出したあと、これまでの対応を振り返る。',
+    labels:{recorded:'📝 原因記録',searchable:'🔍 検索',result:'📊 対策効果',shared:'🌐 共有'},
+    bossSetupTitle:'新規案件の量産開始まで、あと3日。',
+    bossSetupText:'同じ工程で、また不良の兆候が出ている。<br>班長「今度こそ、原因を潰しておきたい」',
+    bossTrialLine:'見つけた情報を頼りに、原因を突き止めて対策を打つことにした。',
+    bossRisk:'もし原因を見誤れば、量産初日から不良の山になる。得意先への納期にも響きかねない。',
+    veteranLine:'🧑‍🔧 ベテランの田中さん「おお、原因分かったのか。それなら量産も安心だな」',
+    bossSuccessResult:'原因を特定し、対策は<br><strong style="font-size:1.6em;color:var(--accent)">量産前に間に合った。</strong>',
+    bossSuccessFlavor:'確かな成果だ。しかし、この対策を<br>次の人も確認できるだろうか？',
+    bossFailResult:'原因を見誤り、<br><strong style="font-size:1.4em;color:var(--danger)">量産初日にヒケ不良を10個出してしまった。</strong>',
+    bossFailFlavor:'過去に同じ不良の記録があったかどうか、<br>確認できていなかったツケが回ってきた。',
+    scolding:'班長「量産前に何やってるんだ！納期に間に合わなくなったらどうする！<br>……とにかく、今度こそ原因と対策を残しておけ」',
+    recordAfterSuccess:'原因と対策を、不良対応記録としてまとめた。<br><br>班長「よし、次にまた同じ不良が出ても、これで対応できるな」<br><br><span class="muted">原因と対策が、誰でも確認できる形で残った。</span>',
+    recordAfterFail:'不良の原因と対策を、詳しく報告書にまとめた。<br><br>班長「よし。次にこの不良が起きても、もう迷わないな」<br><br><span class="muted">高くついた授業料が、会社の知識になった。</span>',
+    verbalAfterSuccess:'対策できたことをみんなに口頭で伝えた。<br><br>その場では安心された。<br><br><span class="muted">しかし、対策の詳しい中身はどこにも残っていない。</span>',
+    verbalAfterFail:'「原因分かったので大丈夫です」とだけ報告した。<br><br>班長「……本当に大丈夫なんだろうな」<br><br><span class="muted">具体的な原因も対策も、記録には残らなかった。</span>',
+    epilogueGood:'数か月後、別の工程を任された佐藤は、あなたが残した不良対応の記録を見て、迷わず原因を突き止められた。<br>佐藤「これのおかげで、すぐ分かりました」',
+    epilogueMid:'数か月後、別の工程を任された佐藤は、断片的な記録を頼りになんとか対応できた。<br>佐藤「もう少し詳しく分かれば、助かったんですけどね……」',
+    epilogueBad:'数か月後、別の工程を任された佐藤は、結局あなたと同じように、原因が分からないまま対応するしかなかった。<br>佐藤「これ、また同じ不良が起きるかもしれないですね……」',
+    moral:'不良は、「直す」だけでは会社の知識にならない。<br>原因を残す。探せる。対策の効果を確認する。次の人が使える。<br>そこまでつながって初めて、失敗は会社の知識になる。',
+    features:['⚠ 不良・トラブルを、その場で改善提案として登録','🤖 AIが原因と対策を整理し、関連する過去事例と結びつける','✅ 対策の効果・再発の有無まで記録が残る','🔍 過去の不良事例を、いつでもキーワードで検索できる','🌐 対策が確立すると、他の成形機・他のラインにも共有される']
+  },
+  {icon:'🔧',title:'加工ノウハウ・技能継承',sub:'技能・判断',
+    eventTitle:'今日は、ベテランの田中さんが急に休み',
+    eventText:'複雑な樹脂ロットの成形条件調整が必要な工程を、<br>あなたが任されることになった。<br>「この樹脂ロット、いつもと粘度が違う気がする……」',
+    eventFlavor:'――マニュアルには載っていない“勘どころ”。<br>多くの成形工場で、ベテランの頭の中にだけある。',
+    actionQuestion:'判断に迷う。まずどうする？',
+    actionHint:'田中さんは今日は連絡が取りづらいかもしれない。正解はない、あなたなら？',
+    choices:{
+      record:{icon:'📓',label:'自分なりの判断基準を言葉にしてメモする',badge:'言語化の達人',result:'「この樹脂ロットのときは、シリンダー温度を5℃上げ、冷却時間を3秒延ばす」<br>そう自分の言葉でメモに書き留めた。<br><br>今回はなんとか乗り切れた。<br><br><span class="muted">しかし──このメモの存在を、他の誰かが知る術はない。</span>'},
+      verbal:{icon:'📞',label:'田中さんに電話をかけて聞く',badge:'電話魔の達人',result:'なんとか田中さんに電話がつながった。<br>田中さん「ああ、それは温度を上げて、冷却を延ばせば大丈夫だ」<br><br><span class="muted">しかし──この会話は、どこにも記録されていない。</span>'},
+      nothing:{icon:'🤷',label:'とりあえず自己判断で進める',badge:'一か八かの達人',result:'いつも通りの設定のまま、見よう見まねで進めた。<br><br><span class="muted">今回はなんとかなった。だが、なぜ大丈夫だったのかは、自分でも説明できない。</span>'}
+    },
+    montage:'・佐藤が成形ラインに配属された<br>・田中さんは無事に復帰した<br>・田中さんの定年退職まで、あと1年に迫っていた',
+    reaction:{record:'（あの時のメモ、まだ手元にあるだろうか？）',verbal:'（あの時聞いた話、正確に覚えているだろうか？）',nothing:'（結局、あの時は何が正解だったんだろう……）'},
+    againTitle:'佐藤が同じ樹脂ロットの成形で、<br>同じように判断に迷っている。',
+    againLine:'佐藤「この樹脂ロット、いつもと粘度が違う気がして……<br>先輩は、こういう時どうしてるんですか？」',
+    searchTitle:'過去の判断基準を探す',
+    searchFlavor:'「前にも同じようなことがあった気がする」<br>そう言われて、記憶と記録を辿る。',
+    searchPlaceholder:'例：樹脂ロット / 保圧 / 判断',
+    keywords:['樹脂','粘度','冷却','判断'],
+    foundCard:'📓 判断基準メモ<br>樹脂ロット変化時の温度・冷却時間の調整',
+    foundCaveat:'見つかったのは自分用の走り書きだけ。<br>他のケースにも通用するかは分からない。',
+    foundReaction:'佐藤「あ、こういうことだったんですね」',
+    failCaveat:'あの判断は、本当に自分だけの勘だったのか？<br>それとも、言葉にしていなかっただけなのか？',
+    failReaction:'佐藤「うーん、やっぱり自分で試すしかないですね……」',
+    statusFlavor:'佐藤を送り出したあと、自分の中の“勘どころ”を振り返る。',
+    labels:{recorded:'📝 言語化',searchable:'🔍 検索',result:'📊 判断結果',shared:'🌐 継承'},
+    bossSetupTitle:'田中さんの退職まで、あと1か月。',
+    bossSetupText:'田中さんにしか分からない工程が、まだいくつも残っている。<br>班長「今のうちに、聞けることは聞いておけ」',
+    bossTrialLine:'これまで積み重ねた判断基準を頼りに、佐藤に工程を教えてみることにした。',
+    bossRisk:'もし基準があいまいなまま任せれば、佐藤が同じ場面でまた迷うことになる。',
+    veteranLine:'🧑‍🔧 ベテランの田中さん「お、ちゃんと分かって教えてるじゃないか。安心して辞められるな」',
+    bossSuccessResult:'佐藤は、教わった基準をもとに<br><strong style="font-size:1.6em;color:var(--accent)">自分の判断で工程を乗り切った。</strong>',
+    bossSuccessFlavor:'確かな手応えだ。しかし、この基準を<br>次の新人も使えるだろうか？',
+    bossFailResult:'基準があいまいなまま任せてしまい、<br><strong style="font-size:1.4em;color:var(--danger)">佐藤が判断を誤り、成形不良のロットを1つムダにしてしまった。</strong>',
+    bossFailFlavor:'自分の中の勘どころを、<br>言葉にしきれていなかったツケが回ってきた。',
+    scolding:'班長「教えたつもりで、伝わってなかったんだな。<br>……とにかく、今度こそちゃんと文字にして残しておけ」',
+    recordAfterSuccess:'佐藤に教えた判断基準を、文書として残した。<br><br>班長「これで、田中さんが抜けても回るな」<br><br><span class="muted">個人の勘どころが、誰でも確認できる形で残った。</span>',
+    recordAfterFail:'今回の失敗を踏まえ、判断基準を改めて文書にまとめた。<br><br>班長「よし。次の新人は、これを見れば迷わずに済む」<br><br><span class="muted">失敗も、言葉にすれば会社の知識になる。</span>',
+    verbalAfterSuccess:'佐藤に口頭でコツを伝えて終わらせた。<br><br>佐藤は「ありがとうございます」と納得した様子だった。<br><br><span class="muted">しかし、その基準は佐藤の頭の中にしか残っていない。</span>',
+    verbalAfterFail:'「次から気をつけて」とだけ口頭で伝えた。<br><br>佐藤は神妙な顔でうなずいた。<br><br><span class="muted">判断基準そのものは、結局言葉にならなかった。</span>',
+    epilogueGood:'田中さんが退職した後も、佐藤はあなたが残した判断基準を頼りに、迷わず工程をこなせている。<br>佐藤「先輩が残してくれたので、田中さんがいなくても大丈夫です」',
+    epilogueMid:'田中さんが退職した後、佐藤は断片的な記憶を頼りになんとかやっている。<br>佐藤「たまに、あの時聞いた話を思い出せなくて困ります……」',
+    epilogueBad:'田中さんが退職した後、佐藤は結局、自分の勘だけを頼りに判断するしかなくなった。<br>佐藤「これ、また誰かが一から覚え直すんでしょうね……」',
+    moral:'ベテランの勘どころは、「聞く」だけでは会社の知識にならない。<br>言葉にする。探せる。誰かに確かめてもらう。次の人が使える。<br>そこまでつながって初めて、個人の技能は会社の知識になる。',
+    features:['🧠 暗黙知・勘どころを、AIとの対話で言葉にして登録','🤖 AIが判断基準を整理し、関連するノウハウと結びつける','✅ 基準が実際に機能したかどうかまで記録が残る','🔍 過去の判断基準を、いつでもキーワードで検索できる','🌐 ベテランが退職する前に、技能を組織の知識として残せる']
+  },
+  {icon:'📖',title:'標準作業・マニュアル',sub:'標準化・定着',
+    eventTitle:'以前見つけた改善が、正式に認められた',
+    eventText:'金型・治具の配置を変えるだけで、<br>段取り時間を短縮できると分かった。<br>「これ、みんなにも使ってもらいたいな」',
+    eventFlavor:'――改善は生まれた。問題は、それが「標準」になるかどうかだ。',
+    actionQuestion:'この改善を、どう広める？',
+    actionHint:'班長は今、別件で忙しそうだ。正解はない、あなたなら？',
+    choices:{
+      record:{icon:'📘',label:'標準作業書を書き換える',badge:'標準化の達人',result:'成形条件標準書の該当ページを、新しい手順に書き換えた。<br><br>これで、少なくとも「正式な手順」にはなった。<br><br><span class="muted">しかし──書き換えたことを、みんなが気づくとは限らない。</span>'},
+      verbal:{icon:'🗣',label:'朝礼でみんなに新しいやり方を伝える',badge:'口頭伝達の達人',result:'朝礼で「金型・治具の置き方、変えました」とみんなに伝えた。<br>その場では「はーい」という反応だった。<br><br><span class="muted">しかし──この説明は、どこにも書き残されていない。</span>'},
+      nothing:{icon:'😌',label:'とりあえず自分だけ新しいやり方でやる',badge:'マイルールの達人',result:'とりあえず自分のときだけ新しい手順でやることにした。<br><br><span class="muted">自分の作業は早くなった。だが、それ以外の誰も、その事実を知らない。</span>'}
+    },
+    montage:'・佐藤が新しく配属された<br>・標準作業書の改訂は、この一件のほかに特になかった<br>・現場は今日も、いつも通りの手順で回っていた',
+    reaction:{record:'（作業書、ちゃんと最新版になっているだろうか？）',verbal:'（あの時説明したこと、みんな覚えているだろうか？）',nothing:'（自分のやり方、他の人には伝わっていなかったな……）'},
+    againTitle:'佐藤が、古いやり方のまま<br>金型段取りをしているのを見かけた。',
+    againLine:'佐藤「え、これが今の正しいやり方じゃないんですか？<br>作業書にはこう書いてあったので……」',
+    searchTitle:'最新の作業手順を確認する',
+    searchFlavor:'「本当にこれが最新版なのか」<br>もう一度、作業書を探してみる。',
+    searchPlaceholder:'例：成形条件標準書 / 金型 / 段取り',
+    keywords:['標準作業書','成形条件','金型','段取り'],
+    foundCard:'📘 成形条件標準書（改訂版）<br>金型・治具配置変更・段取り短縮手順',
+    foundCaveat:'見つかったのは改訂版そのもの。<br>ただし、これが本当に現場全員に伝わっているかは分からない。',
+    foundReaction:'佐藤「あ、こっちが正しいんですね……知りませんでした」',
+    failCaveat:'改訂したはずの作業書は、本当に見つかる場所にあるのか？<br>それとも、誰も更新に気づいていないだけなのか？',
+    failReaction:'佐藤「作業書、探しても出てこないです……」',
+    statusFlavor:'佐藤とのやり取りのあと、この改善がどこまで広まったか振り返る。',
+    labels:{recorded:'📝 作業書反映',searchable:'🔍 検索',result:'📊 定着効果',shared:'🌐 周知'},
+    bossSetupTitle:'来月、新人研修が控えている。',
+    bossSetupText:'新人には、最初から正しい手順を教えたい。<br>班長「古いやり方を教えたら、あとで直すのが大変だぞ」',
+    bossTrialLine:'この改善を、新人研修の正式な手順として教えることにした。',
+    bossRisk:'もし作業書と実際の手順がズレていれば、新人はどちらが正しいか分からなくなる。',
+    veteranLine:'🧑‍🔧 ベテランの田中さん「おお、ちゃんと新しいやり方が広まってるな。俺も見習わないと」',
+    bossSuccessResult:'新人研修は、<br><strong style="font-size:1.6em;color:var(--accent)">最新の手順のまま、迷いなく行えた。</strong>',
+    bossSuccessFlavor:'確かな成果だ。しかし、この状態を<br>これから先もずっと保てるだろうか？',
+    bossFailResult:'作業書と現場の手順がズレていて、<br><strong style="font-size:1.4em;color:var(--danger)">新人に古いやり方を教えてしまった。</strong>',
+    bossFailFlavor:'改善を、みんなが分かる形で残せていなかったツケが回ってきた。',
+    scolding:'班長「新人に古いやり方教えて、また覚え直させる気か！<br>……とにかく、今度こそ全員に伝わる形にしておけ」',
+    recordAfterSuccess:'改善内容を、正式に成形条件標準書へ反映し直した。<br><br>班長「これで、次の新人も迷わず教えられるな」<br><br><span class="muted">最新の手順が、誰でも確認できる形で残った。</span>',
+    recordAfterFail:'今回の行き違いを踏まえ、標準書を全面的に見直して更新した。<br><br>班長「よし。もうこんな行き違いは起きないな」<br><br><span class="muted">失敗も、記録を整えるきっかけになった。</span>',
+    verbalAfterSuccess:'研修担当にだけ口頭で最新のやり方を伝えた。<br><br>今回はうまく伝わった。<br><br><span class="muted">しかし、その内容はやはりどこにも書き残っていない。</span>',
+    verbalAfterFail:'「次からは新しいやり方で」とだけ口頭で伝えた。<br><br>担当者は「分かりました」とうなずいた。<br><br><span class="muted">作業書自体は、結局古いままだった。</span>',
+    epilogueGood:'数か月後、新しく入った新人は、あなたが整えた標準書のおかげで、迷わず正しい手順を覚えられた。<br>佐藤「これのおかげで、教えるのも楽になりました」',
+    epilogueMid:'数か月後、新しく入った新人は、標準書と現場のやり方の食い違いに少し戸惑いながらも、なんとか覚えた。<br>佐藤「たまに、どっちが正しいか分からなくなるんですよね……」',
+    epilogueBad:'数か月後、新しく入った新人もまた、古いやり方を覚えてしまい、あとで教え直すことになった。<br>佐藤「これ、また同じことの繰り返しですね……」',
+    moral:'改善は、「実施した」だけでは会社の知識にならない。<br>作業書に残す。探せる。定着したか確認する。次の人が使える。<br>そこまでつながって初めて、改善は標準になる。',
+    features:['📘 改善内容を、その場でマニュアル更新案として登録','🤖 AIが変更内容を整理し、関連するマニュアルへ反映','✅ 改訂履歴が残り、新旧の版が混在しない','🔍 最新のマニュアルを、いつでもキーワードで検索できる','🌐 更新されると自動で共有され、古い手順のまま止まらない']
+  },
+  {icon:'🌐',title:'組織への蓄積・横展開',sub:'横展開・組織知識',
+    eventTitle:'別のラインを担当する同僚から相談を受けた',
+    eventText:'別の成形ラインの後輩「うちのラインでも、<br>似たような段取りロスがある気がするんです」<br>「成形の方で、なにか改善した事例ってありますか？」',
+    eventFlavor:'――一つのラインの改善は、他のラインでも使えるかもしれない。<br>問題は、それを探し出せるかどうかだ。',
+    actionQuestion:'この相談に、どう応える？',
+    actionHint:'正解はない。あなたなら、まずどうする？',
+    choices:{
+      record:{icon:'📚',label:'過去の改善事例をまとめて共有する',badge:'横展開の達人',result:'これまでの改善内容を整理して、資料としてまとめて渡した。<br><br>相手は「参考にしてみます」と持ち帰った。<br><br><span class="muted">しかし──この資料の存在を、他の部署が知る術はない。</span>'},
+      verbal:{icon:'🗣',label:'口頭で「こんな感じでやった」と説明する',badge:'口頭説明の達人',result:'休憩中に、口頭で改善のやり方をざっくり説明した。<br>後輩「なるほど、参考になります」<br><br><span class="muted">しかし──この説明は、どこにも記録されていない。</span>'},
+      nothing:{icon:'🤐',label:'「うちのラインとは違うから」と深く関わらない',badge:'部門主義の達人',result:'「ラインが違うから、そのまま使えるか分からないよ」と濁した。<br><br><span class="muted">改善のノウハウは、元の成形ラインにとどまったままだ。</span>'}
+    },
+    montage:'・別の成形ラインでも、独自に改善の試行錯誤が始まった<br>・協力工場からも、似たような問い合わせが来るようになった<br>・全社的に「改善」という言葉が、少しずつ聞かれるようになった',
+    reaction:{record:'（あの時渡した資料、まだ残っているだろうか？）',verbal:'（あの時話した内容、正確に伝わっていただろうか？）',nothing:'（結局、あの時の改善は、元のラインだけの話で終わったな……）'},
+    againTitle:'今度は、協力工場の担当者から<br>同じような問い合わせが来た。',
+    againLine:'担当者「御社の成形ラインで、<br>改善事例があると聞いたのですが……」',
+    searchTitle:'全社に共有できる改善事例を探す',
+    searchFlavor:'「他のラインでも使える事例があったはず」<br>そう思い、過去の記録を辿ってみる。',
+    searchPlaceholder:'例：改善事例 / 横展開 / 金型',
+    keywords:['改善事例','横展開','金型','共有'],
+    foundCard:'📚 改善事例集<br>成形ライン・金型段取り効率化のノウハウ',
+    foundCaveat:'見つかったのは当時の資料だけ。<br>他のラインでも同じように効果が出るかは分からない。',
+    foundReaction:'担当者「これ、うちでも試してみます」',
+    failCaveat:'本当に他部署で使える事例がなかったのか？<br>それとも、記録がどこにも残らなかっただけなのか？',
+    failReaction:'担当者「じゃあ、うちで一から考えてみます……」',
+    statusFlavor:'やり取りを終えたあと、この改善がどこまで会社に広がったか振り返る。',
+    labels:{recorded:'📝 事例化',searchable:'🔍 検索',result:'📊 横展開効果',shared:'🌐 全社共有'},
+    bossSetupTitle:'来月の経営会議で、改善活動が議題になる。',
+    bossSetupText:'社長「うちの改善活動、ちゃんと会社全体に広がっているのか？」<br>班長「そのデータ、まとめておいてくれ」',
+    bossTrialLine:'これまでの改善事例をもとに、横展開の実績をまとめて報告することにした。',
+    bossRisk:'もし実績を示せなければ、「改善活動は現場任せ」という評価になってしまう。',
+    veteranLine:'🧑‍🔧 ベテランの田中さん「お、こんなに広がってたのか。ワシの改善も、誰かの役に立ってたんだな」',
+    bossSuccessResult:'横展開の実績は、<br><strong style="font-size:1.6em;color:var(--accent)">複数ライン・複数工場に広がっていた。</strong>',
+    bossSuccessFlavor:'確かな成果だ。しかし、この流れを<br>これからも続けられるだろうか？',
+    bossFailResult:'実績をまとめきれず、<br><strong style="font-size:1.4em;color:var(--danger)">「結局、現場任せでは？」と経営会議で指摘されてしまった。</strong>',
+    bossFailFlavor:'改善事例を、探し出せる形で残せていなかったツケが回ってきた。',
+    scolding:'班長「見えないところで頑張ってても、伝わらなきゃ意味がないんだぞ。<br>……とにかく、今度こそ実績を見える形にしておけ」',
+    recordAfterSuccess:'横展開の実績を、事例集として正式にまとめた。<br><br>班長「これで、次の経営会議でも胸を張って話せるな」<br><br><span class="muted">改善の広がりが、誰でも確認できる形で残った。</span>',
+    recordAfterFail:'今回の反省を踏まえ、改善事例を一つの場所にまとめ直した。<br><br>班長「よし。次はちゃんと説明できるな」<br><br><span class="muted">失敗も、整理し直すきっかけになった。</span>',
+    verbalAfterSuccess:'会議の場で、口頭で横展開の様子を説明した。<br><br>その場では納得してもらえた。<br><br><span class="muted">しかし、その実績はやはりどこにも書き残っていない。</span>',
+    verbalAfterFail:'「頑張ってはいるんですが……」と口頭で説明するにとどまった。<br><br>会議の空気は微妙なままだった。<br><br><span class="muted">実績を示すものは、結局何も残らなかった。</span>',
+    epilogueGood:'数か月後、協力工場の担当者は、あなたが残した事例集を頼りに、迷わず改善を進められた。<br>担当者「これのおかげで、ゼロから考えずに済みました」',
+    epilogueMid:'数か月後、協力工場の担当者は、断片的な情報を頼りになんとか改善を進めた。<br>担当者「もう少し詳しく分かれば、もっと早くできたんですけどね……」',
+    epilogueBad:'数か月後、協力工場の担当者は、結局一から自分たちで考え直すしかなかった。<br>担当者「これ、また別の部署でも同じことをやり直すんでしょうね……」',
+    moral:'一つの改善は、「その場で使う」だけでは会社の知識にならない。<br>事例として残す。探せる。効果を確認する。他の部署が使える。<br>そこまでつながって初めて、現場の改善は組織の力になる。',
+    features:['📚 改善事例を、部署をまたいで検索できるナレッジベースに登録','🤖 AIが事例を整理し、似た課題を持つ他ラインと結びつける','✅ 横展開した結果・効果・失敗まで記録が残る','🔍 全社の改善事例を、いつでもキーワードで検索できる','🌐 経営層にも、改善活動の広がりが見える形で共有される']
+  }
+];
+function missionSelect(){
+  state.step=0;
+  render(`<div class="eyebrow">FACTORY KNOWLEDGE EXPERIENCE</div>
+  <h1>その気づき、<br><span style="color:var(--danger)">3か月後には消えていませんか？</span></h1>
+  <div class="premise">🏭 <b>舞台</b>：プラスチック製品工場（射出成形ライン）<br>👤 <b>あなた</b>：入社3年目、成形ラインの担当者<br>📅 <b>状況</b>：納期に追われる、いつもの一日</div>
+  <p class="muted" style="font-size:15px">現場で起きる5つの出来事を通して、<br>会社に知識が残る仕組みを診断する。<br><strong style="color:var(--text)">気になるMISSIONを選んでください。</strong></p>
+  <div class="mission-select">
+    ${MISSIONS.map((m,i)=>`<button class="mission-card" onclick="${i===0?'start()':`loadMission(${i})`}">
+      <span class="mc-no">MISSION 0${i+1}</span>
+      ${MarketingIllustrations.thumbnail("plastic", i)}
+      <span class="mc-title">${m.title}</span>
+      <span class="mc-sub">${m.sub}</span>
+    </button>`).join('')}
+  </div>`);
+}
+function loadMission(i){
+  state.mission=MISSIONS[i]; state.missionIndex=i;
+  state.action=null; state.searchFound=false; state.bossChoice=null;
+  state.knowledge={idea:true, recorded:0, searchable:0, result:0, shared:0};
+  genEvent();
+}
+function genEvent(){
+  state.step=2;
+  const m=state.mission;
+  render(`<div class="eyebrow">💡 EVENT</div><div class="icon">${m.icon}</div>
+  <h2>${m.eventTitle}</h2>
+  <p>${m.eventText}</p>
+  <p class="muted" style="font-size:15px">${m.eventFlavor}</p>
+  <button class="btn" onclick="genAction()">NEXT ▶</button>`);
+}
+function genAction(){
+  state.step=3;
+  const m=state.mission;
+  render(`<div class="eyebrow">WHAT WILL YOU DO?</div><h2>${m.actionQuestion}</h2>
+  <p class="muted" style="font-size:15px">${m.actionHint}</p>
+  <div class="actions">
+    <button class="action" onclick="genChoose('record')"><span class="aicon">${m.choices.record.icon}</span>${m.choices.record.label}</button>
+    <button class="action" onclick="genChoose('verbal')"><span class="aicon">${m.choices.verbal.icon}</span>${m.choices.verbal.label}</button>
+    <button class="action" onclick="genChoose('nothing')"><span class="aicon">${m.choices.nothing.icon}</span>${m.choices.nothing.label}</button>
+  </div>`);
+}
+function genChoose(a){
+  state.action=a; state.step=4;
+  const m=state.mission, c=m.choices[a];
+  if(a==='record'){state.knowledge.recorded=2;state.knowledge.searchable=1;}
+  if(a==='verbal'){state.knowledge.shared=1;}
+  render(`<div class="eyebrow">ACTION LOG</div><div class="icon">${c.icon}</div><p>${c.result}</p><div class="achievement">🏅 実績解除：${c.badge}</div><br><button class="btn" onclick="genTimeSkip()">NEXT ▶</button>`);
+}
+function genTimeSkip(){
+  state.step=5;
+  const m=state.mission;
+  render(`<div class="timeskip"><div class="icon">⏩</div><div class="eyebrow">TIME PASSES...</div><div class="big-number">3 MONTHS</div><h2>LATER</h2></div>
+  <p class="muted" style="font-size:14px">${m.montage}</p>
+  <p class="muted">現場は、その間も休まず動き続けていた。</p>
+  <button class="btn" onclick="genEventAgain()">CONTINUE ▶</button>`);
+}
+function genEventAgain(){
+  state.step=6;
+  const m=state.mission;
+  const reaction=m.reaction[state.action];
+  render(`<div class="eyebrow">💡 EVENT AGAIN</div><div class="icon">${m.icon}</div><h2>${m.againTitle}</h2>
+  <p>${m.againLine}</p>
+  <p class="npc-line">${reaction}</p>
+  <button class="btn" onclick="genSearch()">🔍 過去の情報を探す</button>`);
+}
+function genSearch(){
+  state.step=7;
+  const m=state.mission;
+  render(`<div class="eyebrow">🔍 KNOWLEDGE SEARCH</div><h2>${m.searchTitle}</h2>
+  <p class="muted" style="font-size:15px">${m.searchFlavor}</p>
+  <div class="searchbox"><input id="query" placeholder="${m.searchPlaceholder}"><button class="btn searchbtn" onclick="genDoSearch()">SEARCH</button></div>
+  <p class="muted">実際にキーワードを入力して検索してください。</p><div id="searchResult"></div>`);
+}
+function genDoSearch(){
+  const q=(document.getElementById('query').value||'').trim();
+  const m=state.mission;
+  const relevant=m.keywords.some(x=>q.includes(x));
+  const found=relevant && state.action==='record';
+  state.searchFound=found; state.knowledge.searchable=found?2:(state.knowledge.searchable?1:0);
+  document.getElementById('searchResult').innerHTML = found
+  ? `<div class="result ok"><strong>✨ KNOWLEDGE FOUND</strong><br><br>${m.foundCard}<br><span class="muted">3か月前・投稿者不明</span><br><br><span class="muted">${m.foundCaveat}</span><br><br><span class="muted">${m.foundReaction}</span></div><button class="btn" onclick="genStatus()">NEXT ▶</button>`
+  : `<div class="result fail"><strong>SEARCH COMPLETE</strong><br><br>該当する情報は見つかりませんでした。<br><br><span class="muted">${m.failCaveat}</span><br><br><span class="muted">${m.failReaction}</span></div><button class="btn" onclick="genStatus()">NEXT ▶</button>`;
+}
+function genStatus(){
+  state.step=8;
+  const m=state.mission;
+  render(`<div class="eyebrow">KNOWLEDGE STATUS</div><h2>会社に残った知識</h2>
+  <p class="muted" style="font-size:15px">${m.statusFlavor}</p>
+  <div class="status">${statusRow('💡 気づき','idea')}${statusRow(m.labels.recorded,'recorded')}${statusRow(m.labels.searchable,'searchable')}${statusRow(m.labels.result,'result')}${statusRow(m.labels.shared,'shared')}</div>
+  <button class="btn" onclick="genBoss()">⚠ BOSS EVENT</button>`);
+}
+function genBoss(){
+  state.illustrationPhase="boss";
+  state.step=9;
+  const m=state.mission;
+  render(`<div class="eyebrow">⚠ BOSS EVENT</div><div class="icon">⚠</div><h2>${m.bossSetupTitle}</h2>
+  <p class="muted" style="font-size:14px">${m.bossSetupText}</p>
+  <p>${m.bossTrialLine}</p>
+  <p class="muted" style="font-size:15px">${m.bossRisk}</p>
+  <button class="btn danger" onclick="genBossTrial()">⚠ 試してみる</button>`);
+}
+function genBossTrial(){
+  state.illustrationPhase="trial";
+  state.step=9;
+  const m=state.mission;
+  if(state.searchFound){
+    render(`<div class="eyebrow">⚠ RESULT</div><div class="icon impact">⏱</div><h2>結果は──</h2>
+    <p class="impact">${m.bossSuccessResult}</p>
+    <p class="muted" style="font-size:15px">${m.bossSuccessFlavor}</p>
+    <p class="npc-line">${m.veteranLine}</p>
+    <div class="actions"><button class="action" onclick="genBossChoice('record')"><span class="aicon">📋</span>結果を記録する</button><button class="action" onclick="genBossChoice('verbal')"><span class="aicon">💬</span>口頭で共有して終わる</button></div>`);
+  } else {
+    render(`<div class="eyebrow">⚠ RESULT</div><div class="icon shake">💥</div><h2>結果は──</h2>
+    <p class="shake">${m.bossFailResult}</p>
+    <p class="muted" style="font-size:15px">${m.bossFailFlavor}</p>
+    <p class="npc-line" style="border-color:var(--danger)">${m.scolding}</p>
+    <div class="actions"><button class="action" onclick="genBossChoice('record')"><span class="aicon">📋</span>経緯を記録する</button><button class="action" onclick="genBossChoice('verbal')"><span class="aicon">💬</span>口頭で済ませる</button></div>`);
+  }
+}
+function genBossChoice(c){
+  state.illustrationPhase="boss-choice";
+  state.bossChoice=c;
+  const m=state.mission, failed=!state.searchFound;
+  let text='';
+  if(c==='record'){
+    state.knowledge.result=2;state.knowledge.shared=2;
+    text=failed?m.recordAfterFail:m.recordAfterSuccess;
+  } else {
+    state.knowledge.result=1;state.knowledge.shared=Math.max(state.knowledge.shared,1);
+    text=failed?m.verbalAfterFail:m.verbalAfterSuccess;
+  }
+  render(`<div class="eyebrow">BOSS RESULT</div><div class="icon">${c==='record'?'📋':'💬'}</div><p>${text}</p><button class="btn" onclick="leadGate(genComplete,'genComplete')">NEXT ▶</button>`);
+}
+function genComplete(){
+  state.step=10;
+  const m=state.mission, lvl=orgLevel(), score=knowledgeScore();
+  const epi=score>=6?m.epilogueGood:score>=3?m.epilogueMid:m.epilogueBad;
+  render(`<div class="eyebrow">MISSION COMPLETE</div><div class="icon">🏁</div><h1>${m.title}</h1>
+  <p>今回の現場体験で<br>会社に残った知識</p>
+  <div class="status">${statusRow('💡 気づき','idea')}${statusRow(m.labels.searchable,'searchable')}${statusRow(m.labels.result,'result')}${statusRow(m.labels.shared,'shared')}</div>
+  <p class="npc-line">${epi}</p>
+  <p class="muted" style="font-size:16px">${m.moral}</p>
+  <div class="levelcard">
+    <div class="eyebrow">🎮 RESULT</div>
+    <div class="icon impact">${lvl.icon}</div>
+    <h2 class="impact">Lv.${lvl.lv} ${lvl.name}</h2>
+    <p class="muted" style="font-size:15px">${lvl.desc}</p>
+    <div class="bar"><div style="width:${score/8*100}%"></div></div>
+    <p class="muted" style="font-size:12px">組織進化レベル ${score} / 8　※MISSION 0${state.missionIndex+1}（全5ミッション中の1つ）の結果です</p>
+  </div>
+  <button class="btn" onclick="genSolution()">NEXT ▶</button>`);
+}
+function genSolution(){
+  state.step=11;
+  const m=state.mission;
+  render(`<div class="eyebrow">🖥 THE SOLUTION</div>
+  <h2>これは、<span style="color:var(--danger)">他人事ではありません。</span></h2>
+  <p class="muted" style="font-size:16px">今、御社の現場でも同じことが起きています。<br>今回のMISSIONで埋まらなかった項目は、仕組みがあれば埋められます。</p>
+  <div class="compare-head"><span></span><span>MISSION体験</span><span>導入後</span></div>
+  <div class="status">
+    ${statusRowCompare(m.labels.recorded,'recorded')}
+    ${statusRowCompare(m.labels.searchable,'searchable')}
+    ${statusRowCompare(m.labels.result,'result')}
+    ${statusRowCompare(m.labels.shared,'shared')}
+  </div>
+  <ul class="feature-list">
+    ${m.features.map(f=>`<li>${f}</li>`).join('')}
+  </ul>
+  <button class="btn" onclick="callStaff()">📅 詳細診断・デモへ進む</button>
+  <button class="btn secondary" onclick="restart()">🔁 もう一度体験する</button>`);
+}
+
+function updateHUD(){
+  document.getElementById("missionLabel").textContent = state.step === 0 ? "全5 MISSIONS" : `MISSION 0${(state.missionIndex || 0) + 1}`;
+  document.getElementById('progressFill').style.width = Math.min(100,state.step*10)+'%';
+  document.getElementById('miniStatus').innerHTML = K.map(([i,n,k])=>{
+    const v=state.knowledge[k], c=v===2?'on':v===1?'partial':'';
+    return `<span><i class="dot ${c}"></i>${i} ${n}</span>`;
+  }).join('');
+}
+function render(html){
+  const scene = MarketingIllustrations.forState(state, "plastic");
+  document.getElementById("screen").innerHTML = `<section class="card fade illustrated-card">${MarketingIllustrations.art(scene)}<div class="story-content">${html}</div></section>`;
+  updateHUD();
+  document.querySelector(".illustrated-card").scrollTop = 0;
+}
+function start(){ state.missionIndex=0; state.step=1; dailyScene(); }
+function dailyScene(){
+  state.step=1;
+  render(`<div class="eyebrow">🏭 朝礼</div><div class="icon">🏭</div>
+  <h2>いつもの朝礼にて</h2>
+  <p>班長「今月も納期がタイトだ。<br>金型の段取りロス、なんとか減らしたいところだな」</p>
+  <p class="muted" style="font-size:15px">いつも通りの朝。だが、今日はいつもと少し違う一日になる。</p>
+  <button class="btn" onclick="eventScreen()">NEXT ▶</button>`);
+}
+function eventScreen(){
+  state.step=2;
+  render(`<div class="eyebrow">💡 EVENT</div><div class="icon">💡</div>
+  <h2>金型段取り作業中</h2>
+  <p>ふと手を止め、治具の並べ方を見つめる。<br>「この金型・治具の配置を変えれば、<br>段取り時間を短縮できそうだ」</p>
+  <p class="muted" style="font-size:15px">――多くのプラスチック成形工場で、日々生まれている気づき。<br>問題は、その先に何が起きるかだ。</p>
+  <button class="btn" onclick="actionScreen()">NEXT ▶</button>`);
+}
+function actionScreen(){
+  state.step=3;
+  render(`<div class="eyebrow">WHAT WILL YOU DO?</div><h2>この改善案をどうする？</h2>
+  <p class="muted" style="font-size:15px">班長は今、別の対応で手一杯そうだ。<br>正解はない。あなたなら、まずどうする？</p>
+  <div class="actions">
+    <button class="action" onclick="choose('memo')"><span class="aicon">📝</span>自分でメモしておく</button>
+    <button class="action" onclick="choose('verbal')"><span class="aicon">💬</span>上司や同僚に<br>口頭で伝える</button>
+    <button class="action" onclick="choose('nothing')"><span class="aicon">➡</span>今は何もしない</button>
+  </div>`);
+}
+function choose(a){
+  state.action=a; state.step=4;
+  let text='', badge='';
+  if(a==='memo'){state.knowledge.recorded=2;state.knowledge.searchable=1;text='作業の区切りで、手元のメモ帳に<br>「金型・治具配置変更→段取り時間短縮」と走り書きした。<br><br>とりあえずこれで、頭からは追い出せる。<br><br><span class="muted">しかし──このメモの存在を、他の誰かが知る術はない。</span>';badge='🏅 実績解除：メモの達人';}
+  if(a==='verbal'){state.knowledge.shared=1;text='通りかかった班長に、思い切って声をかけた。<br>「金型と治具の置き方、変えたら段取りが早くなりそうです」<br>班長「お、いいね。今度試してみよう」<br><br><span class="muted">しかし──この会話は、どこにも記録されていない。</span>';badge='🏅 実績解除：口伝えの達人';}
+  if(a==='nothing'){text='今は手が離せず、心の中にとどめておくことにした。<br><br><span class="muted">改善案は頭の中に残っている。だが、日々の忙しさに追われるうちに、いつしか記憶からも消えていく。</span>';badge='🏅 実績解除：先送りの達人';}
+  render(`<div class="eyebrow">ACTION LOG</div><div class="icon">${a==='memo'?'📝':a==='verbal'?'💬':'➡'}</div><p>${text}</p><div class="achievement">${badge}</div><br><button class="btn" onclick="timeSkip()">NEXT ▶</button>`);
+}
+function timeSkip(){
+  state.step=5;
+  render(`<div class="timeskip"><div class="icon">⏩</div><div class="eyebrow">TIME PASSES...</div><div class="big-number">3 MONTHS</div><h2>LATER</h2></div>
+  <p class="muted" style="font-size:14px">・新人の佐藤が配属された<br>・仕上げ・検査で軽微な指摘が1件あった<br>・今月も、なんとか納期には間に合わせた</p>
+  <p class="muted">現場は、その間も休まず動き続けていた。</p>
+  <button class="btn" onclick="eventAgain()">CONTINUE ▶</button>`);
+}
+function eventAgain(){
+  state.step=6;
+  const reaction = {
+    memo:'（あの時メモに残したはず……今ならすぐ見つけられるだろうか？）',
+    verbal:'（確か、上司に話した記憶がある。だが、覚えているのは自分だけかもしれない。）',
+    nothing:'（何も残していなかったことを、今さらながら少し後悔する。）'
+  }[state.action];
+  render(`<div class="eyebrow">💡 EVENT AGAIN</div><div class="icon">💡</div><h2>新人の佐藤が、同じ工程で<br>同じような改善案を思いついた。</h2>
+  <p>佐藤「あの、この金型・治具の置き方って<br>変えたほうが早くないですか？」</p>
+  <p class="npc-line">${reaction}</p>
+  <button class="btn" onclick="searchScreen()">🔍 過去の情報を探す</button>`);
+}
+function searchScreen(){
+  state.step=7;
+  render(`<div class="eyebrow">🔍 KNOWLEDGE SEARCH</div><h2>過去の改善案を探す</h2>
+  <p class="muted" style="font-size:15px">「前にも似た話があった気がする」<br>そう言われて、記憶を頼りに探し始める。</p>
+  <div class="searchbox"><input id="query" placeholder="例：金型 / 治具 / 段取り"><button class="btn searchbtn" onclick="doSearch()">SEARCH</button></div>
+  <p class="muted">実際にキーワードを入力して検索してください。</p><div id="searchResult"></div>`);
+}
+function doSearch(){
+  const q=(document.getElementById('query').value||'').trim();
+  const relevant=['金型','治具','改善','段取り'].some(x=>q.includes(x));
+  const found = relevant && state.action==='memo';
+  state.searchFound=found; state.knowledge.searchable=found?2:(state.knowledge.searchable?1:0);
+  document.getElementById('searchResult').innerHTML = found
+  ? `<div class="result ok"><strong>✨ KNOWLEDGE FOUND</strong><br><br>📋 段取り改善案<br>金型・治具の配置変更<br><span class="muted">3か月前・投稿者不明</span><br><br><span class="muted">見つかったのは断片だけ。この案が採用されたのか、効果はあったのか──そこまでは分からない。</span><br><br><span class="muted">佐藤「あ、本当にあったんですね……」</span></div><button class="btn" onclick="statusScreen()">NEXT ▶</button>`
+  : `<div class="result fail"><strong>SEARCH COMPLETE</strong><br><br>該当する情報は見つかりませんでした。<br><br><span class="muted">本当に過去の提案が存在しなかったのか？<br>それとも、記録がどこにも残らなかっただけなのか？</span><br><br><span class="muted">佐藤「じゃあ、これ最初なんですかね……」</span></div><button class="btn" onclick="statusScreen()">NEXT ▶</button>`;
+}
+function statusScreen(){
+  state.step=8;
+  render(`<div class="eyebrow">KNOWLEDGE STATUS</div><h2>会社に残った知識</h2>
+  <p class="muted" style="font-size:15px">佐藤を送り出したあと、一呼吸おいて振り返る。<br>ここまでのあなたの判断で、会社にはこれだけが残った。</p>
+  <div class="status">${statusRow('💡 改善アイデア','idea')}${statusRow('📝 記録','recorded')}${statusRow('🔍 検索','searchable')}${statusRow('📊 改善結果','result')}${statusRow('🌐 共有','shared')}</div>
+  <button class="btn" onclick="boss()">⚠ BOSS EVENT</button>`);
+}
+function statusRow(label,key){
+  const v=state.knowledge[key], pct=v===2?100:v===1?45:5;
+  return `<div class="status-row"><strong>${label}</strong><div class="bar"><div style="width:${pct}%"></div></div></div>`;
+}
+function boss(){
+  state.illustrationPhase="boss";
+  state.step=9;
+  render(`<div class="eyebrow">⚠ BOSS EVENT</div><div class="icon">⚠</div><h2>大口ロットの量産開始まで、あと3日。</h2>
+  <p class="muted" style="font-size:14px">来週、大口顧客向けの量産立ち上げが控えている。<br>班長「少しでも生産効率を上げておきたいところだな」</p>
+  <p>見つけた改善案を、<br>本番のラインで試してみることにした。</p>
+  <p class="muted" style="font-size:15px">金型・治具の配置を変える。<br>もし失敗すれば、逆に時間をロスすることになる。</p>
+  <button class="btn danger" onclick="bossTrial()">⚠ 試してみる</button>`);
+}
+function bossTrial(){
+  state.illustrationPhase="trial";
+  state.step=9;
+  if(state.searchFound){
+    render(`<div class="eyebrow">⚠ RESULT</div><div class="icon impact">⏱</div><h2>結果は──</h2>
+    <p class="impact">段取り時間は<br><strong style="font-size:2em;color:var(--accent)">1回あたり2分短縮された。</strong></p>
+    <p class="muted" style="font-size:15px">確かな成果だ。しかし、この結果を<br>次の人も確認できるだろうか？</p>
+    <p class="npc-line">🧑‍🔧 ベテランの田中さん「お、それ効果あったのか。俺も昔、似たようなことやってみたことあるよ」</p>
+    <div class="actions"><button class="action" onclick="bossChoice('record')"><span class="aicon">📋</span>改善結果を記録する</button><button class="action" onclick="bossChoice('verbal')"><span class="aicon">💬</span>口頭で共有して終わる</button></div>`);
+  } else {
+    render(`<div class="eyebrow">⚠ RESULT</div><div class="icon shake">💥</div><h2>結果は──</h2>
+    <p class="shake">手順を見誤り、<br><strong style="font-size:1.6em;color:var(--danger)">金型の位置決めミスで成形不良を1ロット出してしまった。</strong></p>
+    <p class="muted" style="font-size:15px">過去に同じことを試した人がいたか、<br>確認できていなかったツケが回ってきた。</p>
+    <p class="npc-line" style="border-color:var(--danger)">班長「勝手に手順を変えるな！何かあったらどうする！<br>……とにかく、これは記録に残しておけ。次の奴に同じ失敗をさせないためにな」</p>
+    <div class="actions"><button class="action" onclick="bossChoice('record')"><span class="aicon">📋</span>原因と対策を記録する</button><button class="action" onclick="bossChoice('verbal')"><span class="aicon">💬</span>口頭で謝って終わらせる</button></div>`);
+  }
+}
+function bossChoice(c){
+  state.illustrationPhase="boss-choice";
+  state.bossChoice=c;
+  const failed=!state.searchFound;
+  let text='';
+  if(c==='record'){
+    state.knowledge.result=2;state.knowledge.shared=2;
+    text=failed
+      ? '不良の原因と対策を、報告書にまとめて残した。<br><br>班長「よし。次に同じことをする奴が、これを見れば防げる」<br><br><span class="muted">失敗も、記録すれば会社の知識になる。</span>'
+      : '改善結果を、成果として記録に残した。<br><br>班長「よし、量産のときにはこれも見せられるな」<br><br><span class="muted">数字と経緯が、誰でも確認できる形で残った。</span>';
+  } else {
+    state.knowledge.result=1;state.knowledge.shared=Math.max(state.knowledge.shared,1);
+    text=failed
+      ? '「すみませんでした」とその場で謝って終わらせた。<br><br>班長「……まあ、次は気をつけろよ」<br><br><span class="muted">原因も対策も、どこにも残らなかった。</span>'
+      : 'みんなに「効果があった」と口頭で伝えた。<br><br>その場は「おー」という反応だった。<br><br><span class="muted">しかし量産初日、この話を覚えていたのは、あなただけだった。</span>';
+  }
+  render(`<div class="eyebrow">BOSS RESULT</div><div class="icon">${c==='record'?'📋':'💬'}</div><p>${text}</p><button class="btn" onclick="leadGate(complete,'complete')">NEXT ▶</button>`);
+}
+function knowledgeScore(){
+  return state.knowledge.recorded+state.knowledge.searchable+state.knowledge.result+state.knowledge.shared;
+}
+function orgLevel(){
+  const s=knowledgeScore();
+  if(s<=1) return {lv:1,name:'属人化型',icon:'🧍',desc:'知識は個人の頭の中にしかない状態。'};
+  if(s<=3) return {lv:2,name:'管理型',icon:'📋',desc:'記録はあるが、更新も検索もされない状態。'};
+  if(s<=5) return {lv:3,name:'改善活動型',icon:'🔧',desc:'改善は動いているが、知識が分散している状態。'};
+  if(s<=7) return {lv:4,name:'循環型',icon:'🔄',desc:'改善・共有・更新が回り始めている状態。'};
+  return {lv:5,name:'成長型',icon:'🌱',desc:'利用と改善が継続的に組織へ蓄積されている状態。'};
+}
+function epilogue(){
+  const s=knowledgeScore();
+  if(s>=6) return '数か月後、別の工程を任された佐藤は、あなたが残した記録を頼りに迷わず作業を進められた。<br>佐藤「先輩が残してくれてたおかげで、すぐ分かりました」';
+  if(s>=3) return '数か月後、別の工程を任された佐藤は、断片的な情報を頼りになんとか作業を終えた。<br>佐藤「もう少し詳しく分かれば、助かったんですけどね……」';
+  return '数か月後、別の工程を任された佐藤は、結局あなたと同じように、一から手探りで進めるしかなかった。<br>佐藤「これ、また誰かが同じことで悩むんでしょうね……」';
+}
+function complete(){
+  state.step=10;
+  const lvl=orgLevel(), score=knowledgeScore();
+  render(`<div class="eyebrow">MISSION COMPLETE</div><div class="icon">🏁</div><h1>現場の気づき</h1>
+  <p>今回の現場体験で<br>会社に残った知識</p>
+  <div class="status">${statusRow('💡 アイデアを残せる','idea')}${statusRow('🔍 過去の提案を探せる','searchable')}${statusRow('📊 改善結果を確認できる','result')}${statusRow('🌐 他の人が利用できる','shared')}</div>
+  <p class="npc-line">${epilogue()}</p>
+  <p class="muted" style="font-size:16px">改善案は、「思いつく」だけでは会社の知識にならない。<br>残す。探せる。結果を確認する。次の人が使える。<br>そこまでつながって初めて、現場の経験は会社の知識になる。</p>
+  <div class="levelcard">
+    <div class="eyebrow">🎮 RESULT</div>
+    <div class="icon impact">${lvl.icon}</div>
+    <h2 class="impact">Lv.${lvl.lv} ${lvl.name}</h2>
+    <p class="muted" style="font-size:15px">${lvl.desc}</p>
+    <div class="bar"><div style="width:${score/8*100}%"></div></div>
+    <p class="muted" style="font-size:12px">組織進化レベル ${score} / 8　※MISSION 01（全5ミッション中の1つ）の結果です</p>
+  </div>
+  <button class="btn" onclick="solutionScreen()">NEXT ▶</button>`);
+}
+function statusRowCompare(label,key){
+  const v=state.knowledge[key], pct=v===2?100:v===1?45:5;
+  return `<div class="compare-row"><strong>${label}</strong><div class="bar"><div style="width:${pct}%;background:var(--empty)"></div></div><div class="bar"><div style="width:100%"></div></div></div>`;
+}
+function solutionScreen(){
+  state.step=11;
+  render(`<div class="eyebrow">🖥 THE SOLUTION</div>
+  <h2>これは、<span style="color:var(--danger)">他人事ではありません。</span></h2>
+  <p class="muted" style="font-size:16px">今、御社の現場でも同じことが起きています。<br>今回のMISSIONで埋まらなかった項目は、仕組みがあれば埋められます。</p>
+  <div class="compare-head"><span></span><span>MISSION体験</span><span>導入後</span></div>
+  <div class="status">
+    ${statusRowCompare('📝 記録','recorded')}
+    ${statusRowCompare('🔍 検索','searchable')}
+    ${statusRowCompare('📊 改善結果','result')}
+    ${statusRowCompare('🌐 共有','shared')}
+  </div>
+  <ul class="feature-list">
+    <li>💡 現場の気づきを、その場で改善提案として登録</li>
+    <li>🤖 AIが内容を整理し、関連する知識と結びつける</li>
+    <li>✅ 検討〜採否とその理由まで記録が残る</li>
+    <li>🔍 過去の提案や結果を、いつでもキーワードで検索できる</li>
+    <li>🌐 採用されると自動でマニュアル・ナレッジへ反映され、他の人も使える</li>
+  </ul>
+  <button class="btn" onclick="callStaff()">📅 詳細診断・デモへ進む</button>
+  <button class="btn secondary" onclick="restart()">🔁 もう一度体験する</button>`);
+}
+function callStaff(){
+  state.step=12;
+  render(`<div class="eyebrow">🚀 NEXT STEP</div>
+  <h1>この続きは、<br>御社の現場で。</h1>
+  <p class="muted" style="font-size:16px">今回は5分の体験でしたが、実際の診断では<br>御社の状況に合わせて「どこで改善が止まっているか」を確認します。</p>
+  <div class="actions">
+    <a class="action" href="${CONTACT_LINKS.booking}" target="_blank" rel="noopener"><span class="aicon">📅</span>詳細診断・デモを予約する</a>
+    <a class="action" href="${CONTACT_LINKS.document}" target="_blank" rel="noopener"><span class="aicon">📄</span>導入事例・資料を見る</a>
+    <a class="action" href="index.html"><span class="aicon">🏭</span>他の業種の体験も見る</a>
+  </div>
+  <button class="btn secondary" onclick="restart()">🔁 最初から見る</button>`);
+}
+function restart(){
+  state.missionIndex=0;state.illustrationPhase="";
+  state.step=0;state.action=null;state.searchFound=false;state.bossChoice=null;
+  state.knowledge={idea:true,recorded:0,searchable:0,result:0,shared:0};missionSelect();
+}
+function tryResume(){
+  const token = new URLSearchParams(location.search).get('resume');
+  if(!token) return false;
+  const data = decodeResumeToken(token);
+  if(!data) return false;
+  state.missionIndex = data.mi || 0;
+  state.mission = MISSIONS[state.missionIndex] || MISSIONS[0];
+  state.knowledge = Object.assign({idea:true, recorded:0, searchable:0, result:0, shared:0}, data.k || {});
+  (data.h==='genComplete' ? genComplete : complete)();
+  return true;
+}
+if(!tryResume()) missionSelect();
+</script>
+</body>
+</html>

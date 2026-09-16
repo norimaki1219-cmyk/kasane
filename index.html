@@ -79,16 +79,16 @@ a.card{cursor:pointer;transition:transform .15s ease, border-color .15s ease}
 <script>
 // 日本標準産業分類 大分類E 製造業（中分類09〜32）
 const INDUSTRIES = [
-  {code:'09', name:'食料品製造業'},
+  {code:'09', name:'食料品製造業', file:'mission_food.html', scene:'食品工場・惣菜の調理・盛付ライン'},
   {code:'10', name:'飲料・たばこ・飼料製造業'},
   {code:'11', name:'繊維工業', file:'mission_textile.html', scene:'縫製工場・縫製ライン'},
   {code:'12', name:'木材・木製品製造業（家具を除く）'},
   {code:'13', name:'家具・装備品製造業'},
   {code:'14', name:'パルプ・紙・紙加工品製造業'},
-  {code:'15', name:'印刷・同関連業'},
+  {code:'15', name:'印刷・同関連業', file:'mission_print.html', scene:'印刷工場・オフセット印刷ライン'},
   {code:'16', name:'化学工業'},
   {code:'17', name:'石油製品・石炭製品製造業'},
-  {code:'18', name:'プラスチック製品製造業（別掲を除く）'},
+  {code:'18', name:'プラスチック製品製造業（別掲を除く）', file:'mission_plastic.html', scene:'プラスチック製品工場・射出成形ライン'},
   {code:'19', name:'ゴム製品製造業'},
   {code:'20', name:'なめし革・同製品・毛皮製造業'},
   {code:'21', name:'窯業・土石製品製造業'},
@@ -99,7 +99,7 @@ const INDUSTRIES = [
   {code:'26', name:'生産用機械器具製造業'},
   {code:'27', name:'業務用機械器具製造業'},
   {code:'28', name:'電子部品・デバイス・電子回路製造業'},
-  {code:'29', name:'電気機械器具製造業'},
+  {code:'29', name:'電気機械器具製造業', file:'mission_electric.html', scene:'電気機器の組立・検査工場・基板実装ライン'},
   {code:'30', name:'情報通信機械器具製造業'},
   {code:'31', name:'輸送用機械器具製造業', file:'mission_transport.html', scene:'自動車部品の組立工場'},
   {code:'32', name:'その他の製造業'}
@@ -112,7 +112,7 @@ document.getElementById('countLabel').textContent = `${ready.length} / ${INDUSTR
 
 document.getElementById('readyGrid').innerHTML = ready.map(i => `
   <a class="card" href="${i.file}">
-    ${MarketingIllustrations.art(({11:"textile",24:"metal",31:"transport"})[i.code], true)}
+    ${MarketingIllustrations.art(({'09':"food",11:"textile",15:"print",18:"plastic",24:"metal",29:"electric",31:"transport"})[i.code], true)}
     <span class="badge ready">体験できます</span>
     <span class="card-code">中分類 ${i.code}</span>
     <span class="card-name">${i.name}</span>
