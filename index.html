@@ -86,14 +86,14 @@ const INDUSTRIES = [
   {code:'13', name:'家具・装備品製造業'},
   {code:'14', name:'パルプ・紙・紙加工品製造業'},
   {code:'15', name:'印刷・同関連業', file:'mission_printing.html', scene:'印刷工場・オフセット印刷ライン'},
-  {code:'16', name:'化学工業'},
+  {code:'16', name:'化学工業', file:'mission_chemical.html', scene:'化学工場・反応・合成プラント'},
   {code:'17', name:'石油製品・石炭製品製造業'},
   {code:'18', name:'プラスチック製品製造業（別掲を除く）', file:'mission_plastic.html', scene:'プラスチック製品工場・射出成形ライン'},
   {code:'19', name:'ゴム製品製造業'},
   {code:'20', name:'なめし革・同製品・毛皮製造業'},
   {code:'21', name:'窯業・土石製品製造業'},
-  {code:'22', name:'鉄鋼業'},
-  {code:'23', name:'非鉄金属製造業'},
+  {code:'22', name:'鉄鋼業', file:'mission_steel.html', scene:'製鋼工場・電気炉溶解〜連続鋳造・圧延ライン'},
+  {code:'23', name:'非鉄金属製造業', file:'mission_nonferrous.html', scene:'非鉄金属工場・溶解鋳造〜表面処理ライン'},
   {code:'24', name:'金属製品製造業', file:'mission01.html', scene:'板金加工の工場・加工ライン'},
   {code:'25', name:'はん用機械器具製造業'},
   {code:'26', name:'生産用機械器具製造業'},
@@ -112,7 +112,7 @@ document.getElementById('countLabel').textContent = `${ready.length} / ${INDUSTR
 
 document.getElementById('readyGrid').innerHTML = ready.map(i => `
   <a class="card" href="${i.file}">
-    ${MarketingIllustrations.art(({'09':"food",11:"textile",15:"printing",18:"plastic",24:"metal",29:"electric",31:"transport"})[i.code], true)}
+    ${MarketingIllustrations.art(({'09':"food",11:"textile",15:"printing",'16':"chemical",18:"plastic",'22':"steel",'23':"nonferrous",24:"metal",29:"electric",31:"transport"})[i.code], true)}
     <span class="badge ready">体験できます</span>
     <span class="card-code">中分類 ${i.code}</span>
     <span class="card-name">${i.name}</span>
