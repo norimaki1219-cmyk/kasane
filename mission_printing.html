@@ -413,7 +413,7 @@ function missionSelect(){
   <div class="mission-select">
     ${MISSIONS.map((m,i)=>`<button class="mission-card" onclick="${i===0?'start()':`loadMission(${i})`}">
       <span class="mc-no">MISSION 0${i+1}</span>
-      ${MarketingIllustrations.thumbnail("print", i)}
+      ${MarketingIllustrations.thumbnail("printing", i)}
       <span class="mc-title">${m.title}</span>
       <span class="mc-sub">${m.sub}</span>
     </button>`).join('')}
@@ -585,7 +585,7 @@ function updateHUD(){
   }).join('');
 }
 function render(html){
-  const scene = MarketingIllustrations.forState(state, "print");
+  const scene = MarketingIllustrations.forState(state, "printing");
   document.getElementById("screen").innerHTML = `<section class="card fade illustrated-card">${MarketingIllustrations.art(scene)}<div class="story-content">${html}</div></section>`;
   updateHUD();
   document.querySelector(".illustrated-card").scrollTop = 0;

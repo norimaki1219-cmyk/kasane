@@ -85,7 +85,7 @@ const INDUSTRIES = [
   {code:'12', name:'木材・木製品製造業（家具を除く）'},
   {code:'13', name:'家具・装備品製造業'},
   {code:'14', name:'パルプ・紙・紙加工品製造業'},
-  {code:'15', name:'印刷・同関連業', file:'mission_print.html', scene:'印刷工場・オフセット印刷ライン'},
+  {code:'15', name:'印刷・同関連業', file:'mission_printing.html', scene:'印刷工場・オフセット印刷ライン'},
   {code:'16', name:'化学工業'},
   {code:'17', name:'石油製品・石炭製品製造業'},
   {code:'18', name:'プラスチック製品製造業（別掲を除く）', file:'mission_plastic.html', scene:'プラスチック製品工場・射出成形ライン'},
@@ -112,7 +112,7 @@ document.getElementById('countLabel').textContent = `${ready.length} / ${INDUSTR
 
 document.getElementById('readyGrid').innerHTML = ready.map(i => `
   <a class="card" href="${i.file}">
-    ${MarketingIllustrations.art(({'09':"food",11:"textile",15:"print",18:"plastic",24:"metal",29:"electric",31:"transport"})[i.code], true)}
+    ${MarketingIllustrations.art(({'09':"food",11:"textile",15:"printing",18:"plastic",24:"metal",29:"electric",31:"transport"})[i.code], true)}
     <span class="badge ready">体験できます</span>
     <span class="card-code">中分類 ${i.code}</span>
     <span class="card-name">${i.name}</span>
