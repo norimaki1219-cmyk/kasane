@@ -1,11 +1,8 @@
-コンテンツはユーザーが作成したもので、未検証です。
-
-
-アーティファクトについて学ぶ
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>業務ナレッジ&ワークフロー システム — 画面モックアップ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -14,7 +11,7 @@
     --bg: #F5F4F1;
     --panel: #FFFFFF;
     --ink: #22262B;
-    --ink-soft: #5B6169;
+    --ink-soft: #40464E;
     --line: #E4E2DC;
     --indigo: #2B3A55;
     --indigo-deep: #1B2740;
@@ -34,12 +31,15 @@
     color:var(--ink);
   }
   .mono{ font-family:'Space Mono', monospace; letter-spacing:0.02em; }
+  a{ cursor:pointer; }
+  input::placeholder, textarea::placeholder{ color:#5F646C; opacity:1; }
 
   /* ---- App shell ---- */
-  .app{ display:flex; min-height:100vh; }
+  .app{ display:flex; min-height:100vh; align-items:flex-start; }
   .sidebar{
     width:220px; background:var(--indigo-deep); color:#fff;
     padding:28px 0; flex-shrink:0;
+    position:sticky; top:0; height:100vh; overflow-y:auto;
   }
   .brand{
     padding:0 24px 24px; font-weight:900; font-size:15px; letter-spacing:0.04em;
@@ -48,19 +48,21 @@
   .brand span{ display:block; font-size:10px; font-weight:400; opacity:0.55; margin-top:4px; font-family:'Space Mono',monospace; }
   .nav-item{
     display:flex; align-items:center; gap:10px;
-    padding:11px 24px; font-size:13.5px; color:rgba(255,255,255,0.72);
+    padding:11px 24px; font-size:14px; color:rgba(255,255,255,0.72);
     cursor:pointer; border-left:3px solid transparent;
   }
   .nav-item .num{ font-family:'Space Mono',monospace; font-size:10px; opacity:0.6; width:14px; }
   .nav-item:hover{ background:rgba(255,255,255,0.05); color:#fff; }
   .nav-item.active{ background:rgba(255,255,255,0.08); color:#fff; border-left-color:var(--amber); }
 
-  .main{ flex:1; padding:32px 40px; max-width:1040px; }
+  .main{ flex:1; padding:32px 40px; max-width:1040px; min-width:0; }
   .screen{ display:none; }
   .screen.active{ display:block; }
 
-  h1.page-title{ font-size:20px; font-weight:700; margin:0 0 4px; }
-  .page-sub{ color:var(--ink-soft); font-size:13px; margin:0 0 26px; }
+  h1.page-title{ font-size:21px; font-weight:700; margin:0 0 4px; }
+  .page-sub{ color:var(--ink-soft); font-size:14px; line-height:1.7; margin:0 0 26px; }
+  .meta{ font-size:12.5px; color:var(--ink-soft); line-height:1.6; }
+  .back{ font-size:12.5px; color:var(--indigo); margin:0 0 10px; display:inline-block; }
 
   /* status dot signature */
   .dot{ width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:6px; }
@@ -74,7 +76,7 @@
     flex:1; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
     padding:18px 20px;
   }
-  .kpi .label{ font-size:11.5px; color:var(--ink-soft); margin-bottom:8px; }
+  .kpi .label{ font-size:12.5px; color:var(--ink-soft); margin-bottom:8px; }
   .kpi .value{ font-family:'Space Mono',monospace; font-size:28px; font-weight:700; }
   .kpi .value.amber{ color:var(--amber); }
   .kpi .value.red{ color:var(--red); }
@@ -82,7 +84,7 @@
   .section-title{ font-size:12px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.06em; margin:26px 0 10px; }
 
   .feed{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); }
-  .feed-item{ display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--line); font-size:13px; }
+  .feed-item{ display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--line); font-size:13.5px; }
   .feed-item:last-child{ border-bottom:none; }
   .feed-time{ font-family:'Space Mono',monospace; font-size:11px; color:var(--ink-soft); margin-left:auto; }
 
@@ -91,47 +93,72 @@
   .list-row{ display:flex; align-items:center; padding:14px 18px; border-bottom:1px solid var(--line); gap:16px; }
   .list-row:last-child{ border-bottom:none; }
   .list-row:hover{ background:#FAFAF8; }
-  .list-title{ flex:1; }
-  .list-title .name{ font-weight:500; font-size:13.5px; }
-  .list-title .meta{ font-size:11.5px; color:var(--ink-soft); margin-top:3px; }
-  .badge{ font-size:10.5px; padding:3px 9px; border-radius:20px; font-weight:700; }
+  .list-title{ flex:1; min-width:0; }
+  .list-title .name{ font-weight:500; font-size:14.5px; color:var(--ink); }
+  .list-title .meta{ margin-top:3px; }
+  .badge{ font-size:11px; padding:3px 9px; border-radius:20px; font-weight:700; white-space:nowrap; }
   .badge.good{ background:var(--green-bg); color:var(--green); }
   .badge.stale{ background:var(--amber-bg); color:var(--amber); }
   .badge.overdue{ background:var(--red-bg); color:var(--red); }
-  .list-actions a{ font-size:12px; color:var(--indigo); text-decoration:none; font-weight:500; }
+  .list-actions a{ font-size:13px; color:var(--indigo); text-decoration:none; font-weight:500; white-space:nowrap; }
 
-  .toolbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+  .tag-type{
+    display:inline-block; font-size:11px; font-weight:700; padding:1px 7px; margin-right:6px;
+    border-radius:2px; background:var(--bg); color:var(--ink-soft); border:1px solid var(--line);
+  }
+  /* ナレッジのタグ。種別ラベルと区別できる丸みのある藍系チップ */
+  .tag-chip{
+    display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:999px;
+    background:#DDE4F0; color:var(--indigo-deep); border:1px solid #A9B7D0; font-size:12.5px; font-weight:500;
+  }
+  .chips{ display:flex; gap:4px; flex-wrap:wrap; margin-top:5px; }
+
+  .toolbar{ display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+  .search-bar{ display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; }
+  .search-field label{ display:block; font-size:12px; color:var(--ink-soft); margin-bottom:3px; }
+  .form-input{
+    font-family:inherit; font-size:13.5px; padding:8px 10px; border:1px solid var(--line);
+    border-radius:var(--radius); background:#fff; color:var(--ink); min-width:140px;
+  }
+  textarea.form-input{ width:100%; resize:vertical; }
   .btn{
     background:var(--indigo); color:#fff; border:none; border-radius:var(--radius);
-    padding:9px 16px; font-size:12.5px; font-weight:500; cursor:pointer; font-family:inherit;
+    padding:9px 16px; font-size:13.5px; font-weight:500; cursor:pointer; font-family:inherit;
   }
-  .btn.ghost{ background:transparent; color:var(--indigo); border:1px solid var(--line); }
+  /* 副ボタン。透明だとボタンと分からないため、うす藍の塗り＋枠線にしている */
+  .btn.ghost{ background:#DDE4F0; color:var(--indigo-deep); border:1px solid #A9B7D0; }
+  .btn.ghost:hover{ background:#CBD6E8; }
+  .btn.small{ padding:2px 10px; font-size:12px; }
 
-  /* ---- Manual detail ---- */
+  /* ---- Knowledge detail ---- */
   .detail-grid{ display:flex; gap:24px; }
-  .detail-main{ flex:1; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px 24px; }
-  .detail-side{ width:280px; }
+  .detail-main{ flex:1; min-width:0; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px 24px; }
+  .detail-side{ width:280px; flex-shrink:0; }
   .doc-h{ font-size:17px; font-weight:700; margin:0 0 6px; }
-  .doc-meta{ font-size:12px; color:var(--ink-soft); margin-bottom:18px; }
-  .doc-body{ font-size:13.5px; line-height:1.9; color:#3a3f45; }
-  .doc-body h3{ font-size:14px; margin:18px 0 8px; }
+  .doc-meta{ font-size:12px; color:var(--ink-soft); margin-bottom:14px; }
+  .doc-body{ font-size:14px; line-height:1.9; color:#3a3f45; }
+  .doc-body h3{ font-size:14.5px; margin:18px 0 8px; }
+  .doc-body p{ margin:6px 0; }
+  .tags-row{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+  .rating-box{ padding:10px 14px; background:var(--amber-bg); border-radius:var(--radius); margin-bottom:14px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:13px; }
+  .stars{ color:var(--amber); font-size:17px; letter-spacing:2px; }
 
   .suggest-card{
     background:var(--amber-bg); border:1px solid #ecd6ac; border-radius:var(--radius);
     padding:16px; margin-bottom:16px;
   }
-  .suggest-card .tag{ font-size:10px; font-weight:700; color:var(--amber); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px; display:block; }
-  .suggest-card p{ font-size:12.5px; line-height:1.7; margin:0 0 12px; color:#4a3c22; }
+  .suggest-card .tag{ font-size:11px; font-weight:700; color:var(--amber); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px; display:block; }
+  .suggest-card p{ font-size:13px; line-height:1.7; margin:0 0 12px; color:#4a3c22; }
   .suggest-actions{ display:flex; gap:8px; }
   .suggest-actions button{
-    flex:1; padding:7px; font-size:11.5px; border-radius:var(--radius); border:1px solid transparent; cursor:pointer; font-family:inherit; font-weight:700;
+    flex:1; padding:7px; font-size:12.5px; border-radius:var(--radius); border:1px solid transparent; cursor:pointer; font-family:inherit; font-weight:700;
   }
   .btn-accept{ background:var(--green); color:#fff; }
-  .btn-reject{ background:transparent; color:var(--ink-soft); border-color:var(--line); }
+  .btn-reject{ background:var(--red-bg); color:var(--red); border-color:#DDB4AB !important; }
 
   .side-block{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:16px; margin-bottom:16px; }
-  .side-block h4{ font-size:11.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); margin:0 0 10px; }
-  .rev-item{ font-size:12px; padding:6px 0; border-bottom:1px dashed var(--line); }
+  .side-block h4{ font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); margin:0 0 10px; }
+  .rev-item{ font-size:12.5px; padding:6px 0; border-bottom:1px dashed var(--line); }
   .rev-item:last-child{ border-bottom:none; }
 
   /* ---- Workflow run ---- */
@@ -149,28 +176,53 @@
   }
   .step.done .step-dot{ background:var(--indigo); border-color:var(--indigo); color:#fff; }
   .step.current .step-dot{ border-color:var(--amber); color:var(--amber); font-weight:700; }
-  .step-label{ font-size:12px; color:var(--ink-soft); }
+  .step-label{ font-size:12.5px; color:var(--ink-soft); }
   .step.current .step-label{ color:var(--ink); font-weight:700; }
 
   .run-card{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:24px; }
-  .run-row{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--line); font-size:13px; }
+  .run-row{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--line); font-size:13.5px; }
   .run-row:last-of-type{ border-bottom:none; }
   .run-row .k{ color:var(--ink-soft); }
   .warn-line{
     display:flex; align-items:center; gap:8px; background:var(--red-bg); color:var(--red);
-    padding:10px 14px; border-radius:var(--radius); font-size:12px; margin:16px 0; font-weight:500;
+    padding:10px 14px; border-radius:var(--radius); font-size:12.5px; margin:16px 0; font-weight:500;
   }
-  .action-row{ display:flex; gap:10px; margin-top:20px; }
+  .action-row{ display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
+
+  /* ---- Suggestion detail / board ---- */
+  .suggest-detail{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:20px 24px; margin-bottom:16px; }
+  .board-post{ display:flex; gap:10px; padding:10px 0; border-top:1px solid var(--line); }
+  .avatar{
+    width:28px; height:28px; border-radius:50%; background:var(--indigo); color:#fff; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700;
+  }
+  .board-post-main{ flex:1; min-width:0; }
+  .board-post-body{ white-space:pre-wrap; margin-top:4px; font-size:14px; line-height:1.7; }
+  .board-post-delete{ color:var(--red); font-size:12px; text-decoration:underline; padding-left:10px; }
+
+  /* ---- 図・グラフ（画像）を載せるカード ---- */
+  .visual-card{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:16px; overflow-x:auto; }
+  .visual-card img{ display:block; width:100%; height:auto; max-width:940px; margin:0 auto; }
+  .visual-title{ font-size:14px; font-weight:700; margin:0 0 10px; color:var(--ink); }
 
   /* ---- Settings ---- */
   .settings-row{ display:flex; justify-content:space-between; align-items:center; padding:16px 0; border-bottom:1px solid var(--line); }
   .settings-row:last-child{ border-bottom:none; }
-  .settings-row .t{ font-size:13.5px; font-weight:500; }
-  .settings-row .d{ font-size:11.5px; color:var(--ink-soft); margin-top:3px; }
-  .switch{ width:38px; height:20px; border-radius:20px; background:var(--line); position:relative; cursor:pointer; }
+  .settings-row .t{ font-size:14px; font-weight:500; }
+  .settings-row .d{ font-size:12.5px; color:var(--ink-soft); margin-top:3px; }
+  .switch{ width:38px; height:20px; border-radius:20px; background:var(--line); position:relative; cursor:pointer; flex-shrink:0; }
   .switch.on{ background:var(--indigo); }
   .switch::after{ content:""; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff; transition:0.15s; }
   .switch.on::after{ left:20px; }
+
+  @media (max-width:820px){
+    .app{ flex-direction:column; }
+    .sidebar{ width:100%; height:auto; position:static; padding:14px 0; }
+    .main{ padding:20px 16px; }
+    .detail-grid{ flex-direction:column; }
+    .detail-side{ width:100%; }
+    .kpi-row{ flex-direction:column; }
+  }
 </style>
 </head>
 <body>
@@ -178,12 +230,15 @@
   <div class="sidebar">
     <div class="brand">業務ナレッジ<br>ワークフロー<span>LIGHTWEIGHT / SELF-HOSTED</span></div>
     <div class="nav-item active" data-target="s1"><span class="num">01</span>ダッシュボード</div>
-    <div class="nav-item" data-target="s2"><span class="num">02</span>マニュアル一覧</div>
-    <div class="nav-item" data-target="s3"><span class="num">03</span>マニュアル詳細</div>
-    <div class="nav-item" data-target="s4"><span class="num">04</span>ワークフロー一覧</div>
-    <div class="nav-item" data-target="s5"><span class="num">05</span>ワークフロー実行</div>
-    <div class="nav-item" data-target="s6"><span class="num">06</span>改善提案一覧</div>
-    <div class="nav-item" data-target="s7"><span class="num">07</span>通知設定</div>
+    <div class="nav-item" data-target="s9"><span class="num">02</span>業務フロー</div>
+    <div class="nav-item" data-target="s2"><span class="num">03</span>ナレッジ一覧</div>
+    <div class="nav-item" data-target="s3"><span class="num">04</span>ナレッジ詳細</div>
+    <div class="nav-item" data-target="s4"><span class="num">05</span>ワークフロー一覧</div>
+    <div class="nav-item" data-target="s5"><span class="num">06</span>ワークフロー実行</div>
+    <div class="nav-item" data-target="s6"><span class="num">07</span>気づき・改善提案</div>
+    <div class="nav-item" data-target="s7"><span class="num">08</span>改善提案の詳細</div>
+    <div class="nav-item" data-target="s10"><span class="num">09</span>効果測定</div>
+    <div class="nav-item" data-target="s8"><span class="num">10</span>通知設定</div>
   </div>
 
   <div class="main">
@@ -191,59 +246,109 @@
     <!-- 01 DASHBOARD -->
     <div class="screen active" id="s1">
       <h1 class="page-title">ダッシュボード</h1>
-      <p class="page-sub">今日の状況 — 2026年8月23日（日）</p>
+      <p class="page-sub">今日の状況 — 2026年9月21日（月）</p>
 
       <div class="kpi-row">
         <div class="kpi"><div class="label">未対応の改善提案</div><div class="value amber">4</div></div>
         <div class="kpi"><div class="label">滞留中のワークフロー</div><div class="value red">2</div></div>
-        <div class="kpi"><div class="label">要確認マニュアル</div><div class="value">3</div></div>
+        <div class="kpi"><div class="label">要確認ナレッジ</div><div class="value">3</div></div>
       </div>
 
       <div class="section-title">最近の通知</div>
       <div class="feed">
-        <div class="feed-item"><span class="dot stale"></span>「経費精算マニュアル」が62日間更新されていません<span class="feed-time mono">09:14</span></div>
+        <div class="feed-item"><span class="dot stale"></span>「経費精算の手順」が62日間更新されていません<span class="feed-time mono">09:14</span></div>
         <div class="feed-item"><span class="dot overdue"></span>「出張申請 #128」が承認ステップで5日間停滞<span class="feed-time mono">08:40</span></div>
-        <div class="feed-item"><span class="dot good"></span>「オンボーディング手順」の更新案が採用されました<span class="feed-time mono">昨日</span></div>
+        <div class="feed-item"><span class="dot good"></span>改善提案「経費精算の締め日を見直したい」に書き込みがありました<span class="feed-time mono">昨日</span></div>
+        <div class="feed-item"><span class="dot good"></span>「新入社員オンボーディング」の更新案が採用されました<span class="feed-time mono">昨日</span></div>
+      </div>
+
+      <div class="section-title">導入の効果（例）</div>
+      <div class="visual-card">
+        <img src="assets/mockup/roi-chart.svg" alt="累計の投資額と削減額の推移。約4.3か月で元が取れる例">
       </div>
     </div>
 
-    <!-- 02 MANUAL LIST -->
+    <!-- 業務フロー（画像） -->
+    <div class="screen" id="s9">
+      <h1 class="page-title">業務フロー</h1>
+      <p class="page-sub">会社の仕事の流れを部門ごとに図にし、各作業に「読むべきナレッジ」を紐づけます。作業ごとの手順や過去の対応記録を、その場で開けます。</p>
+      <div class="visual-card">
+        <img src="assets/mockup/business-flow.svg" alt="業務フロー図の例：営業・受注管理・製造・経理の流れと、各作業に紐づくナレッジ">
+      </div>
+      <p class="meta" style="margin-top:10px;">※ 図は例です。オレンジの数字は、その作業に紐づくナレッジの件数です。</p>
+    </div>
+
+    <!-- 02 KNOWLEDGE LIST -->
     <div class="screen" id="s2">
-      <h1 class="page-title">マニュアル一覧</h1>
-      <p class="page-sub">社内の手順書・ナレッジ</p>
-      <div class="toolbar"><span></span><button class="btn">＋ 新規マニュアル</button></div>
+      <h1 class="page-title">ナレッジ一覧</h1>
+      <p class="page-sub">社内のマニュアル・過去の対応記録などのナレッジ</p>
+      <div class="toolbar">
+        <div class="search-bar">
+          <div class="search-field"><label>種類</label><select class="form-input"><option>すべての種類</option></select></div>
+          <div class="search-field"><label>キーワード</label><input class="form-input" placeholder="タイトル・本文・タグで検索"></div>
+          <div class="search-field"><label>タグ</label><select class="form-input"><option>すべてのタグ</option><option>経理（3）</option><option>申請（2）</option></select></div>
+          <div class="search-field"><label>評価</label><select class="form-input"><option>すべての評価</option></select></div>
+        </div>
+        <button class="btn">＋ ナレッジを登録</button>
+      </div>
       <div class="list">
         <div class="list-row">
-          <div class="list-title"><div class="name">経費精算の手順</div><div class="meta">最終更新: 62日前 ・ 参照 214回 ・ 紐付くワークフロー: 経費申請</div></div>
+          <div class="list-title">
+            <div class="name"><span class="tag-type">マニュアル</span>経費精算の手順</div>
+            <div class="meta">作成: 田中 ・ 最終更新: 62日前 ・ 参照 214回 ・ 評価 ★4.5（6件）</div>
+            <div class="chips"><span class="tag-chip">経理</span><span class="tag-chip">申請</span><span class="tag-chip">月次</span></div>
+          </div>
           <span class="badge stale">要確認</span>
           <div class="list-actions"><a>開く →</a></div>
         </div>
         <div class="list-row">
-          <div class="list-title"><div class="name">出張申請フロー</div><div class="meta">最終更新: 8日前 ・ 参照 132回 ・ 紐付くワークフロー: 出張申請</div></div>
+          <div class="list-title">
+            <div class="name"><span class="tag-type">マニュアル</span>出張申請フロー</div>
+            <div class="meta">作成: 佐藤 ・ 最終更新: 8日前 ・ 参照 132回 ・ 評価 ★4.0（3件）</div>
+            <div class="chips"><span class="tag-chip">申請</span><span class="tag-chip">経理</span></div>
+          </div>
           <span class="badge good">良好</span>
           <div class="list-actions"><a>開く →</a></div>
         </div>
         <div class="list-row">
-          <div class="list-title"><div class="name">新入社員オンボーディング</div><div class="meta">最終更新: 3日前 ・ 参照 301回 ・ 紐付くワークフロー: なし</div></div>
+          <div class="list-title">
+            <div class="name"><span class="tag-type">対応記録</span>取引先への請求書再発行の対応</div>
+            <div class="meta">作成: 鈴木（共同: 田中） ・ 最終更新: 14日前 ・ 参照 57回</div>
+            <div class="chips"><span class="tag-chip">経理</span><span class="tag-chip">請求</span></div>
+          </div>
           <span class="badge good">良好</span>
           <div class="list-actions"><a>開く →</a></div>
         </div>
         <div class="list-row">
-          <div class="list-title"><div class="name">休暇申請ルール</div><div class="meta">最終更新: 95日前 ・ 参照 88回 ・ 紐付くワークフロー: 休暇申請</div></div>
+          <div class="list-title">
+            <div class="name"><span class="tag-type">マニュアル</span>休暇申請ルール</div>
+            <div class="meta">作成: 高橋 ・ 最終更新: 95日前 ・ 参照 88回</div>
+            <div class="chips"><span class="tag-chip">人事</span></div>
+          </div>
           <span class="badge overdue">要更新</span>
           <div class="list-actions"><a>開く →</a></div>
         </div>
       </div>
     </div>
 
-    <!-- 03 MANUAL DETAIL -->
+    <!-- 03 KNOWLEDGE DETAIL -->
     <div class="screen" id="s3">
-      <h1 class="page-title">マニュアル詳細</h1>
+      <h1 class="page-title">ナレッジ詳細</h1>
       <p class="page-sub">経費精算の手順</p>
       <div class="detail-grid">
         <div class="detail-main">
           <div class="doc-h">経費精算の手順</div>
-          <div class="doc-meta mono">owner: 田中 ／ 最終更新 2026-06-22 ／ 参照 214回</div>
+          <div class="doc-meta mono">owner: 田中 ／ 最終更新 2026-07-22 ／ 参照 214回</div>
+          <div class="tags-row">
+            <span class="meta" style="color:var(--ink);font-weight:700;">タグ</span>
+            <span class="tag-chip">経理</span><span class="tag-chip">申請</span><span class="tag-chip">月次</span>
+            <button class="btn ghost small">タグを編集</button>
+          </div>
+          <div class="rating-box">
+            <span class="stars">★★★★☆</span>
+            <span>あなたの評価 4 ／ 平均 4.5（6件）</span>
+            <button class="btn ghost small">コメントを追加</button>
+          </div>
           <div class="doc-body">
             <h3>1. 対象範囲</h3>
             <p>業務に必要な交通費・消耗品費・接待費を対象とする。上限は部署ごとの予算枠に準じる。</p>
@@ -252,11 +357,16 @@
             <h3>3. 締め日</h3>
             <p>毎月25日締め、翌月10日払い。締め日を過ぎた申請は翌々月払いとなる。</p>
           </div>
+          <div class="action-row">
+            <button class="btn ghost">編集する</button>
+            <button class="btn ghost">削除する</button>
+            <button class="btn ghost">ナレッジ一覧へ戻る</button>
+          </div>
         </div>
         <div class="detail-side">
           <div class="suggest-card">
             <span class="tag">AI更新案</span>
-            <p>「締め日」の記載が2024年度の旧ルールのままです。現行の経費規定（25日締め）との整合を確認し、反映することを提案します。</p>
+            <p>「締め日」の記載が旧ルールのままです。現行の経費規定（25日締め）との整合を確認し、反映することを提案します。</p>
             <div class="suggest-actions">
               <button class="btn-accept">採用する</button>
               <button class="btn-reject">却下</button>
@@ -264,8 +374,8 @@
           </div>
           <div class="side-block">
             <h4>更新履歴</h4>
-            <div class="rev-item">2026-06-22 ・ 田中が編集</div>
-            <div class="rev-item">2026-03-01 ・ AI提案を採用</div>
+            <div class="rev-item">2026-07-22 ・ 田中が編集</div>
+            <div class="rev-item">2026-03-01 ・ 更新案を採用</div>
             <div class="rev-item">2025-11-14 ・ 初版作成</div>
           </div>
         </div>
@@ -308,8 +418,8 @@
       <div class="run-card">
         <div class="warn-line">⚠ このステップは5日間停滞しています（通常の平均: 1.2日）</div>
         <div class="run-row"><span class="k">現在の担当者</span><span>鈴木（上長）</span></div>
-        <div class="run-row"><span class="k">ステップ到達日時</span><span class="mono">2026-08-18 10:02</span></div>
-        <div class="run-row"><span class="k">紐付くマニュアル</span><span><a href="#" style="color:var(--indigo)">出張申請フロー →</a></span></div>
+        <div class="run-row"><span class="k">ステップ到達日時</span><span class="mono">2026-09-16 10:02</span></div>
+        <div class="run-row"><span class="k">紐付くナレッジ</span><span><a style="color:var(--indigo)">出張申請フロー →</a></span></div>
         <div class="action-row">
           <button class="btn">承認する</button>
           <button class="btn ghost">差し戻す</button>
@@ -317,31 +427,107 @@
       </div>
     </div>
 
-    <!-- 06 SUGGESTIONS -->
+    <!-- 06 SUGGESTIONS (LIST) -->
     <div class="screen" id="s6">
-      <h1 class="page-title">改善提案一覧</h1>
-      <p class="page-sub">システムが検知し、AIが下書きを作成した改善提案</p>
+      <h1 class="page-title">気づき・改善提案</h1>
+      <p class="page-sub">現場で気づいたこと（手順が実態と違う、こうすると不良が減る、など）を書き残す場所です。管理者が採用すると、ナレッジに反映されます。</p>
+      <div class="toolbar">
+        <div class="search-bar">
+          <div class="search-field"><label>キーワード</label><input class="form-input" placeholder="キーワードで検索"></div>
+          <div class="search-field"><label>状態</label><select class="form-input"><option>すべての状態</option></select></div>
+        </div>
+        <button class="btn">＋ 気づき・提案を登録</button>
+      </div>
+      <!-- 一覧はタイトルと状態のみ。本文・対象・理由・書き込みは詳細画面に集約 -->
       <div class="list">
         <div class="list-row">
-          <div class="list-title"><div class="name">経費精算の手順 — 締め日の記載更新</div><div class="meta">検知理由: 62日間未更新 ・ 生成: 2026-08-20</div></div>
+          <div class="list-title"><a class="name" style="text-decoration:none;">経費精算の締め日を見直したい</a></div>
           <span class="badge stale">未対応</span>
-          <div class="list-actions"><a>確認する →</a></div>
+          <div class="list-actions"><a>詳細 →</a></div>
         </div>
         <div class="list-row">
-          <div class="list-title"><div class="name">出張申請フロー — 承認ステップの簡略化</div><div class="meta">検知理由: 平均承認日数 5.1日 ・ 生成: 2026-08-19</div></div>
+          <div class="list-title"><a class="name" style="text-decoration:none;">出張申請の承認ステップを簡略化してほしい</a></div>
           <span class="badge overdue">未対応</span>
-          <div class="list-actions"><a>確認する →</a></div>
+          <div class="list-actions"><a>詳細 →</a></div>
         </div>
         <div class="list-row">
-          <div class="list-title"><div class="name">オンボーディング手順 — 用語の統一</div><div class="meta">検知理由: レビュー担当者からの指摘 ・ 生成: 2026-08-10</div></div>
+          <div class="list-title"><a class="name" style="text-decoration:none;">オンボーディング手順の用語を統一してください</a></div>
           <span class="badge good">採用済み</span>
-          <div class="list-actions"><a>確認する →</a></div>
+          <div class="list-actions"><a>詳細 →</a></div>
         </div>
       </div>
     </div>
 
-    <!-- 07 SETTINGS -->
+    <!-- 07 SUGGESTION DETAIL + BOARD -->
     <div class="screen" id="s7">
+      <a class="back">← 気づき・改善提案の一覧へ</a>
+      <div class="suggest-detail">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+          <span class="badge stale">未対応</span>
+          <span class="meta">対象: ナレッジ「<a style="color:var(--indigo)">経費精算の手順</a>」</span>
+        </div>
+        <div class="meta" style="margin-bottom:12px;">登録: 佐藤 ・ 生成: 2026-09-18 10:20</div>
+        <div class="doc-body">
+          <p><strong>経費精算の締め日を見直したい</strong></p>
+          <p>月末が休日の場合、25日締めだと入力が間に合わないことがあります。締め日を営業日ベースにできないか検討してほしいです。</p>
+        </div>
+        <div class="meta" style="margin-top:12px;"><strong>理由:</strong> 月末の入力が集中して差し戻しが増えている</div>
+        <div class="action-row">
+          <button class="btn-accept" style="background:var(--green);color:#fff;border:1px solid var(--green);border-radius:3px;padding:6px 14px;font-weight:700;font-family:inherit;font-size:12.5px;">採用</button>
+          <button class="btn-reject" style="border:1px solid #DDB4AB;border-radius:3px;padding:6px 14px;font-weight:700;font-family:inherit;font-size:12.5px;">却下</button>
+        </div>
+      </div>
+
+      <!-- 掲示板 -->
+      <div class="side-block">
+        <h4 style="margin-bottom:4px;">掲示板（2件）</h4>
+        <p class="meta" style="margin:0 0 12px;">この提案について、「うちでも起きている」「こういうやり方もある」など、気づいたことを自由に書き込めます。提案者と、これまでに書き込んだ人に通知されます。</p>
+        <div class="board-post">
+          <div class="avatar">田</div>
+          <div class="board-post-main">
+            <div class="meta"><strong style="color:var(--ink)">田中</strong> ・ 2026-09-18 14:05</div>
+            <div class="board-post-body">経理側でも同じ悩みがあります。営業日ベースなら差し戻しはかなり減りそうです。</div>
+          </div>
+        </div>
+        <div class="board-post">
+          <div class="avatar">鈴</div>
+          <div class="board-post-main">
+            <div class="meta"><strong style="color:var(--ink)">鈴木</strong> ・ 2026-09-19 09:30<span class="board-post-delete">削除</span></div>
+            <div class="board-post-body">まず来月分だけ試験的に営業日ベースにしてみて、結果を実施結果に残すのはどうでしょう。</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;">
+          <label class="meta" style="display:block;margin-bottom:3px;">書き込む</label>
+          <textarea class="form-input" rows="3" placeholder="例：うちの現場でも同じことが起きています／この方法なら試せそうです"></textarea>
+        </div>
+        <div class="action-row"><button class="btn">書き込む</button></div>
+      </div>
+    </div>
+
+    <!-- 効果測定（グラフ画像） -->
+    <div class="screen" id="s10">
+      <h1 class="page-title">効果測定</h1>
+      <p class="page-sub">導入の効果を、作業時間の変化と「いつ元が取れるか」で見える化します。数字は例です。</p>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="label">年間の削減額</div><div class="value" style="color:var(--green)">144万円</div></div>
+        <div class="kpi"><div class="label">投資額（12か月）</div><div class="value">90万円</div></div>
+        <div class="kpi"><div class="label">差引（削減額 − 投資額）</div><div class="value" style="color:var(--green)">+54万円</div></div>
+        <div class="kpi"><div class="label">回収の目安</div><div class="value amber">4.3か月</div></div>
+      </div>
+
+      <div class="visual-card">
+        <h4 class="visual-title">いつ元が取れるか：累計の推移</h4>
+        <img src="assets/mockup/roi-chart.svg" alt="累計の投資額と削減額の推移。約4.3か月で元が取れる例">
+      </div>
+      <div class="visual-card" style="margin-top:16px;">
+        <h4 class="visual-title">導入前後の作業時間（1件あたり）</h4>
+        <img src="assets/mockup/time-saved.svg" alt="導入前後の作業時間の比較。見積作成、請求書処理、情報を探す時間がいずれも短縮された例">
+      </div>
+    </div>
+
+    <!-- 08 SETTINGS -->
+    <div class="screen" id="s8">
       <h1 class="page-title">通知設定</h1>
       <p class="page-sub">Slackが使えない環境でも、メール通知だけで運用できます</p>
       <div class="side-block" style="width:100%; max-width:520px;">
@@ -364,14 +550,18 @@
 </div>
 
 <script>
+  function show(target){
+    document.querySelectorAll('.nav-item').forEach(i=>i.classList.toggle('active', i.dataset.target===target));
+    document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active', s.id===target));
+    window.scrollTo(0,0);
+  }
   document.querySelectorAll('.nav-item').forEach(item=>{
-    item.addEventListener('click', ()=>{
-      document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-      item.classList.add('active');
-      document.getElementById(item.dataset.target).classList.add('active');
-    });
+    item.addEventListener('click', ()=> show(item.dataset.target));
   });
+  // 一覧の行からの遷移（実際の画面と同じ導線）
+  document.querySelectorAll('#s2 .list-row').forEach(r=> r.addEventListener('click', ()=> show('s3')));
+  document.querySelectorAll('#s6 .list-row').forEach(r=> r.addEventListener('click', ()=> show('s7')));
+  document.querySelector('#s7 .back').addEventListener('click', ()=> show('s6'));
 </script>
 </body>
 </html>

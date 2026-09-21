@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" aria-label="累計の投資額と累計の削減額の推移。約4.3か月で削減額が投資額を上回り、12か月時点で投資90万円に対し削減144万円となる例">
+  <style>
+    text{ font-family:'Zen Kaku Gothic New','Yu Gothic','Meiryo',sans-serif; fill:#40464E; font-size:12px; }
+    .axis{ stroke:#8A9099; stroke-width:1; }
+    .grid{ stroke:#E4E2DC; stroke-width:1; }
+    .val{ font-weight:700; font-size:13px; }
+  </style>
+  <rect width="720" height="380" fill="#FFFFFF"/>
+
+  <!-- 凡例 -->
+  <g>
+    <line x1="60" y1="20" x2="84" y2="20" stroke="#3F7A5B" stroke-width="3" stroke-linecap="round"/>
+    <text x="90" y="24" style="fill:#22262B">削減額の累計</text>
+    <line x1="200" y1="20" x2="224" y2="20" stroke="#2B3A55" stroke-width="3" stroke-linecap="round"/>
+    <text x="230" y="24" style="fill:#22262B">投資の累計（初期費用＋月額）</text>
+  </g>
+
+  <!-- 目盛り（縦：万円） -->
+  <g>
+    <line class="grid" x1="60" y1="240" x2="600" y2="240"/>
+    <line class="grid" x1="60" y1="170" x2="600" y2="170"/>
+    <line class="grid" x1="60" y1="100" x2="600" y2="100"/>
+    <line class="grid" x1="60" y1="30"  x2="600" y2="30"/>
+    <line class="axis" x1="60" y1="310" x2="600" y2="310"/>
+    <text x="52" y="314" text-anchor="end">0</text>
+    <text x="52" y="244" text-anchor="end">40</text>
+    <text x="52" y="174" text-anchor="end">80</text>
+    <text x="52" y="104" text-anchor="end">120</text>
+    <text x="52" y="34"  text-anchor="end">160</text>
+    <text x="52" y="14"  text-anchor="end" style="font-size:11px">万円</text>
+  </g>
+  <!-- 目盛り（横：月） -->
+  <g text-anchor="middle">
+    <text x="60"  y="330">0</text>
+    <text x="150" y="330">2</text>
+    <text x="240" y="330">4</text>
+    <text x="330" y="330">6</text>
+    <text x="420" y="330">8</text>
+    <text x="510" y="330">10</text>
+    <text x="600" y="330">12</text>
+    <text x="330" y="352">経過月数（か月）</text>
+  </g>
+
+  <!-- 元が取れた後の差額（効果の見える化） -->
+  <polygon points="252.9,220 600,58 600,152.5" fill="#3F7A5B" fill-opacity="0.14"/>
+
+  <!-- 投資の累計 -->
+  <line x1="60" y1="257.5" x2="600" y2="152.5" stroke="#2B3A55" stroke-width="3" stroke-linecap="round"/>
+  <!-- 削減額の累計 -->
+  <line x1="60" y1="310" x2="600" y2="58" stroke="#3F7A5B" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- 損益分岐点 -->
+  <line x1="252.9" y1="220" x2="252.9" y2="310" stroke="#C98A2E" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <circle cx="252.9" cy="220" r="6" fill="#C98A2E" stroke="#fff" stroke-width="2"/>
+  <g>
+    <rect x="272" y="228" width="170" height="44" rx="4" fill="#FBF0DE" stroke="#ECD6AC"/>
+    <text x="357" y="247" text-anchor="middle" class="val" style="fill:#22262B">約4.3か月で元が取れる</text>
+    <text x="357" y="264" text-anchor="middle" style="font-size:11.5px">ここから先は、削減額が上回る</text>
+  </g>
+
+  <!-- 終点の値 -->
+  <circle cx="600" cy="58" r="5" fill="#3F7A5B" stroke="#fff" stroke-width="2"/>
+  <circle cx="600" cy="152.5" r="5" fill="#2B3A55" stroke="#fff" stroke-width="2"/>
+  <text x="608" y="62"  class="val" style="fill:#3F7A5B">144万円</text>
+  <text x="608" y="157" class="val" style="fill:#2B3A55">90万円</text>
+  <text x="606" y="108" style="font-size:12px;fill:#22262B" font-weight="700">差引 +54万円</text>
+</svg>
