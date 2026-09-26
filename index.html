@@ -99,7 +99,7 @@ const INDUSTRIES = [
   {code:'24', name:'金属製品製造業', file:'mission01.html', scene:'板金加工の工場・加工ライン'},
   {code:'25', name:'はん用機械器具製造業'},
   {code:'26', name:'生産用機械器具製造業'},
-  {code:'27', name:'業務用機械器具製造業'},
+  {code:'27', name:'業務用機械器具製造業（精密機械）', file:'mission_precision.html', scene:'精密機械工場・光学・計測機器の組立・調整ライン'},
   {code:'28', name:'電子部品・デバイス・電子回路製造業'},
   {code:'29', name:'電気機械器具製造業', file:'mission_electric.html', scene:'電気機器の組立・検査工場・基板実装ライン'},
   {code:'30', name:'情報通信機械器具製造業'},
@@ -114,7 +114,7 @@ document.getElementById('countLabel').textContent = `${ready.length} / ${INDUSTR
 
 document.getElementById('readyGrid').innerHTML = ready.map(i => `
   <a class="card" href="${i.file}">
-    ${MarketingIllustrations.art(({'09':"food",11:"textile",15:"printing",'16':"chemical",18:"plastic",'22':"steel",'23':"nonferrous",24:"metal",29:"electric",31:"transport"})[i.code], true)}
+    ${MarketingIllustrations.art(({'09':"food",11:"textile",15:"printing",'16':"chemical",18:"plastic",'22':"steel",'23':"nonferrous",24:"metal",27:"precision",29:"electric",31:"transport"})[i.code], true)}
     <span class="badge ready">体験できます</span>
     <span class="card-code">中分類 ${i.code}</span>
     <span class="card-name">${i.name}</span>
